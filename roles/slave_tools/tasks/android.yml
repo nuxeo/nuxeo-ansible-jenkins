@@ -1,0 +1,22 @@
+---
+# file: roles/slave/tasks/android.yml
+
+- setup: filter=ansible_env
+
+- name: Check for Android SDK
+  stat: path=/opt/build/tools/android-sdk-linux
+  register: android_installed
+- name: Get Android SDK package
+  s3: bucket={{s3_bucket}} region={{s3_region}}
+      object=/{{s3_tools_path}}/android-sdk-24.4.1.tgz dest=/tmp/android-sdk-24.4.1.tgz mode=get
+      aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}}
+  when: not android_installed.stat.exists
+- name: Install Android SDK
+  unarchive: src=/tmp/android-sdk-24.4.1.tgz dest=/opt/build/tools copy=no
+  when: not android_installed.stat.exists
+- name: Install Android SDK packages
+  shell: echo y | android update sdk --all --no-ui --filter tools,platform-tools,build-tools-23.0.1,android-23,extra-android-m2repository,extra-google-m2repository
+  environment:
+    PATH: "/opt/build/tools/android-sdk-linux/tools:/opt/build/tools/android-sdk-linux/platform-tools:{{ansible_env.PATH}}"
+
+- file: path=/tmp/android-sdk-24.4.1.tgz state=absent

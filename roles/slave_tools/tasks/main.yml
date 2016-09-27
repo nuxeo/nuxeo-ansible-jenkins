@@ -75,6 +75,9 @@
   - libc6-i386
   - g++-multilib
   - libssl-dev
+  # Android SDK
+  - lib32z1
+  - lib32ncurses5
   # Amazon S3
   - s3cmd
   # Funkload requirements
@@ -164,6 +167,9 @@
 - include: gradle.yml
   when: gradleversion.rc != 0 or gradleversion.stdout != "1.6"
   tags: gradle
+
+# Android
+- include: android.yml
 
 - name: Spot instance Jenkins callback script
 # use https://qa.nuxeo.org/jenkins/plugin/ec2/AMI-Scripts/ubuntu-ami-setup.sh once ec2 plugin upgraded
@@ -289,4 +295,3 @@
 - include: postgresql.yml
 
 - include: git-lfs.yml
-
