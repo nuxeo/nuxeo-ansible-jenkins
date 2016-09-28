@@ -1,2 +1,2 @@
-deb https://packagecloud.io/github/git-lfs/ubuntu/ trusty main
+deb https://packagecloud.io/github/git-lfs/ubuntu/ xenial main
 

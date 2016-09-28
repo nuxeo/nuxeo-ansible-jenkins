@@ -37,8 +37,6 @@
   with_items:
   - ntp
   - python-httplib2
-  - openjdk-6-jdk
-  - openjdk-7-jdk
   - git
   - mercurial
   - subversion
@@ -106,8 +104,6 @@
 - pip: name=awscli
 - shell: easy_install -f http://funkload.nuxeo.org/snapshots/ -U funkload
 - alternatives: name=editor path=/usr/bin/vim.basic
-- file: src=/usr/lib/jvm/java-1.6.0-openjdk-amd64 path=/usr/lib/jvm/java-6-openjdk state=link
-- file: src=/usr/lib/jvm/java-1.7.0-openjdk-amd64 path=/usr/lib/jvm/java-7-openjdk state=link
 # Xvfb, x11vnc, fluxbox
 - copy: src=xvfb dest=/etc/init.d/xvfb
         mode=755 owner=root group=root
@@ -147,6 +143,8 @@
 # Java versions
 - include: java6.yml
   tags: java,java6
+- include: java7.yml
+  tags: java,java7
 - include: java8.yml
   tags: java,java8
 - name: Set default to Java 8

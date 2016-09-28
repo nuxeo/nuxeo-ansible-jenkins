@@ -79,9 +79,11 @@
 #  become_user: jenkins
 #  changed_when: false
 
+- name: Ensure .gradle dir exists
+  file: path=/opt/jenkins/.gradle owner=jenkins group=jenkins mode=0755 state=directory
 - name: gradle.properties
   s3: bucket={{s3_bucket}} region={{s3_region}}
-      object=/{{s3_config_path}}/gradle.properties dest=/opt/build/hudson/gradle.properties mode=get
+      object=/{{s3_config_path}}/gradle.properties dest=/opt/jenkins/.gradle/gradle.properties mode=get
       aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}} overwrite=different
 - name: instance.clid
   s3: bucket={{s3_bucket}} region={{s3_region}}

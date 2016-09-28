@@ -2,20 +2,20 @@
 #
 # VERSION               0.0.1
 
-FROM       phusion/baseimage:0.9.18
+FROM       phusion/baseimage:0.9.19
 MAINTAINER Nuxeo Packagers <packagers@nuxeo.com>
 
-RUN echo "deb http://ubuntu.mirrors.ovh.net/ftp.ubuntu.com/ubuntu/ trusty main restricted universe multiverse" > /etc/apt/sources.list
-RUN echo "deb http://ubuntu.mirrors.ovh.net/ftp.ubuntu.com/ubuntu/ trusty-updates main restricted universe multiverse" >> /etc/apt/sources.list
-RUN echo "deb http://security.ubuntu.com/ubuntu trusty-security main restricted universe multiverse" >> /etc/apt/sources.list
+RUN echo "deb http://ubuntu.mirrors.ovh.net/ftp.ubuntu.com/ubuntu/ xenial main restricted universe multiverse" > /etc/apt/sources.list
+RUN echo "deb http://ubuntu.mirrors.ovh.net/ftp.ubuntu.com/ubuntu/ xenial-updates main restricted universe multiverse" >> /etc/apt/sources.list
+RUN echo "deb http://security.ubuntu.com/ubuntu xenial-security main restricted universe multiverse" >> /etc/apt/sources.list
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update || true
 RUN apt-get -q -y dist-upgrade
-RUN apt-get -q -y install locales unzip
+RUN apt-get -q -y install locales unzip sudo
 RUN locale-gen en_US.UTF-8
 RUN dpkg-reconfigure locales
 RUN update-locale LANG=en_US.UTF-8
-RUN apt-get install -q -y postgresql libpq-dev python-psycopg2 openjdk-7-jdk libreoffice imagemagick poppler-utils ffmpeg2theora ufraw libwpd-tools git redis-server redis-tools rsync xvfb x11vnc fluxbox
+RUN apt-get install -q -y postgresql libpq-dev python-psycopg2 libreoffice imagemagick poppler-utils ffmpeg2theora ufraw libwpd-tools git redis-server redis-tools rsync xvfb x11vnc fluxbox
 
 #RUN git clone https://github.com/nuxeo/ffmpeg-nuxeo.git
 #ENV BUILD_YASM true

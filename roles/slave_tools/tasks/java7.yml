@@ -1,0 +1,22 @@
+---
+- name: Check for Java 7
+  stat: path=/usr/lib/jvm/jdk1.7.0_80
+  register: java7_installed
+- name: Get Java7 package
+  s3: bucket={{s3_bucket}} region={{s3_region}}
+      object=/{{s3_tools_path}}/jdk-7u80-linux-x64.tar.gz dest=/tmp/jdk-7-linux-x64.tar.gz mode=get
+      aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}}
+  when: not java7_installed.stat.exists
+- name: Install JDK 7
+  unarchive: src=/tmp/jdk-7-linux-x64.tar.gz dest=/usr/lib/jvm copy=no
+  when: not java7_installed.stat.exists
+- name: Create JDK 7 symlink
+  file: src=/usr/lib/jvm/jdk1.7.0_80 path=/usr/lib/jvm/java-7 state=link force=yes
+  when: not java7_installed.stat.exists
+- name: Install JDK 7 alternative
+  command: update-alternatives --install /usr/bin/java java /usr/lib/jvm/java-7/jre/bin/java 1071
+  when: not java7_installed.stat.exists
+- file: path=/tmp/jdk-7-linux-x64.tgz state=absent
+- name: Add fake openjdk 7 symlink
+  file: src=/usr/lib/jvm/java-7 path=/usr/lib/jvm/java-7-openjdk state=link
+

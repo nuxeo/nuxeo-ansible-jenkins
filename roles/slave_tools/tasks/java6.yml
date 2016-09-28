@@ -19,4 +19,5 @@
   command: update-alternatives --install /usr/bin/java java /usr/lib/jvm/java-6-sun/jre/bin/java 1062
   when: not java6_installed.stat.exists
 - file: path=/tmp/jdk-6-linux-x64.bin state=absent
-
+- name: Add fake openjdk 6 symlink
+  file: src=/usr/lib/jvm/java-6-sun path=/usr/lib/jvm/java-6-openjdk state=link

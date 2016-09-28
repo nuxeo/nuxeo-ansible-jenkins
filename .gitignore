@@ -2,3 +2,5 @@ docker/files/id_rsa.pub
 cache
 wincache
 *.retry
+*.pyc
+

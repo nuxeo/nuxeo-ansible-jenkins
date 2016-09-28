@@ -18,5 +18,6 @@
   shell: echo y | android update sdk --all --no-ui --filter tools,platform-tools,build-tools-23.0.1,android-23,extra-android-m2repository,extra-google-m2repository
   environment:
     PATH: "/opt/build/tools/android-sdk-linux/tools:/opt/build/tools/android-sdk-linux/platform-tools:{{ansible_env.PATH}}"
+  when: not android_installed.stat.exists
 
 - file: path=/tmp/android-sdk-24.4.1.tgz state=absent
