@@ -97,6 +97,7 @@
   - python-requests
   - python-yaml
   - xmlstarlet
+  - gdebi-core
 - apt: state=latest name=tcpwatch-httpproxy install_recommends=no
 - pip: name=logchart
 - pip: name=boto
@@ -127,6 +128,23 @@
   command: dpkg -i /tmp/ffmpeg-nuxeo_2.8.5-1_amd64.deb
   when: ffmpegcheck.rc == 1
 - file: path=/tmp/ffmpeg-nuxeo_2.8.5-1_amd64.deb state=absent
+
+# CCExtractor pre-built from sources
+- name: Check for ccextractor
+  command: dpkg-query -W ccextractor-nuxeo
+  register: ccxcheck
+  failed_when: ccxcheck.rc > 1
+  changed_when: false
+- name: Get ccextractor package
+  s3: bucket={{s3_bucket}} region={{s3_region}}
+      object=/{{s3_tools_path}}/ccextractor-nuxeo_0.0.1-20161004-01-1_amd64.deb
+      dest=/tmp/ccextractor-nuxeo_0.0.1-20161004-01-1_amd64.deb mode=get
+      aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}}
+  when: ccxcheck.rc == 1
+- name: Install ccextractor
+  command: gdebi --n /tmp/ccextractor-nuxeo_0.0.1-20161004-01-1_amd64.deb
+  when: ccxcheck.rc == 1
+- file: path=/tmp/ccextractor-nuxeo_0.0.1-20161004-01-1_amd64.deb state=absent
 
 # Firefox
 # Can't use APT which pulls unfixed FF version
