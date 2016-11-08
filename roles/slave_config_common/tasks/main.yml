@@ -71,15 +71,17 @@
   changed_when: false
 
 - name: Git config
-  # should be backup=yes but create=true option is missing on ini_file
-  ini_file: dest=/opt/jenkins/.gitconfig state=present backup=no owner=jenkins group=jenkins mode=640
+  ini_file: dest=/opt/jenkins/.gitconfig state=present backup=yes create=yes owner=jenkins group=jenkins mode=640
             section=user option=name value="Jenkins Nuxeo"
-- ini_file: dest=/opt/jenkins/.gitconfig state=present backup=no owner=jenkins group=jenkins mode=640
+- ini_file: dest=/opt/jenkins/.gitconfig state=present backup=yes create=yes owner=jenkins group=jenkins mode=640
             section=user option=email value="jenkins@nuxeo.com"
-#- name: Add git-lfs
-#  command: git lfs install
-#  become_user: jenkins
-#  changed_when: false
+
+- name: Add git-lfs
+  shell: cd /opt/jenkins && git lfs install
+  become: true
+  become_user: jenkins
+  become_flags: "-H"
+  changed_when: false
 
 - name: Ensure .gradle dir exists
   file: path=/opt/jenkins/.gradle owner=jenkins group=jenkins mode=0755 state=directory
