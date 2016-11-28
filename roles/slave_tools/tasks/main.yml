@@ -92,6 +92,7 @@
   - python-qt4
   - libffi-dev
   - python-virtualenv
+  - python-cffi
   # Useful to have
   - python-lxml
   - python-requests
