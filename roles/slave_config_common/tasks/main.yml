@@ -111,6 +111,10 @@
       object=/{{s3_config_path}}/keystores/keytabs/krb5.conf dest=/etc/krb5.conf mode=get
       aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}} overwrite=different
 
+- name: Disable Azure data collection
+  shell: azure telemetry --disable
+  become_user: jenkins
+  when: azure_install.changed
 - name: Setup Azure CLI
   shell: azure account import /opt/build/keystores/azure.nuxeo.com.publishsettings
   become_user: jenkins
