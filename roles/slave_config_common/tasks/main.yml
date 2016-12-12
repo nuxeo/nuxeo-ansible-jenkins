@@ -115,6 +115,10 @@
   shell: azure telemetry --disable
   become_user: jenkins
   when: azure_install.changed
+- name: Configure Azure CLI for ASM
+  shell: azure config mode asm
+  become_user: jenkins
+  when: azure_install.changed
 - name: Setup Azure CLI
   shell: azure account import /opt/build/keystores/azure.nuxeo.com.publishsettings
   become_user: jenkins
