@@ -240,7 +240,7 @@
 
 # Azure CLI
 - name: Install Azure CLI
-  npm: name=azure-cli version=0.9.10 global=yes
+  npm: name=azure-cli version=0.10.7 global=yes
   register: azure_install
   tags: azure-cli
 - name: Add azure symlink
