@@ -30,16 +30,16 @@ echo "DISPLAY=:1" >>  /etc/environment
 
 # Add defined DB variables to environment
 for v in HOST PORT NAME USER PASS ADMINNAME ADMINUSER ADMINPASS; do
-    var="NX_DB_$v"
+    var="NX_DB_${v}"
     if [ "${!var}x" != "x" ]; then
-        echo ${!var} >> /etc/container_environment/NX_DB_$v
-        echo "NX_DB_$v=${!var}" >> /etc/environment
+        echo ${!var} >> /etc/container_environment/${var}
+        echo "${var}=${!var}" >> /etc/environment
     fi
     for d in MSSQL MYSQL MARIADB ORACLE11G ORACLE12C PGSQL; do
-        var="NX_$d_DB_$v"
-        if [ "${!var}x" != "x" ]; then
-            echo ${!var} >> /etc/container_environment/NX_$d_DB_$v
-            echo "NX_$d_DB_$v=${!var}" >> /etc/environment
+        dbvar="NX_${d}_DB_${v}"
+        if [ "${!dbvar}x" != "x" ]; then
+            echo ${!dbvar} >> /etc/container_environment/${dbvar}
+            echo "${dbvar}=${!dbvar}" >> /etc/environment
         fi
     done
 done
