@@ -1,0 +1,10 @@
+---
+- name: Get Terraform package
+  s3: bucket={{s3_bucket}} region={{s3_region}}
+      object=/{{s3_tools_path}}/terraform.zip dest=/tmp/terraform.zip mode=get
+      aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}}
+- name: Install Terraform
+  unarchive: src=/tmp/terraform.zip dest=/usr/bin copy=no
+- file: path=/tmp/terraform.zip state=absent
+- file: path=/usr/bin/terraform mode=0755 owner=root group=root
+

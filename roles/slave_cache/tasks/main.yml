@@ -20,6 +20,7 @@
 - include: gradle.yml
 - include: nodejs.yml
 - include: phantomjs.yml
+- include: terraform.yml
 
 - name: Update S3 cache
   command: aws s3 sync . s3://{{s3_bucket}}/{{s3_tools_path}}/ --region={{s3_region}}

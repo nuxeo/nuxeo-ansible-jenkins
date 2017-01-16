@@ -312,3 +312,12 @@
 - include: postgresql.yml
 
 - include: git-lfs.yml
+
+- name: Check for terraform
+  stat: path=/usr/bin/terraform
+  register: terraform_installed
+  tags: terraform
+- include: terraform.yml
+  when: not terraform_installed.stat.exists
+  tags: terraform
+

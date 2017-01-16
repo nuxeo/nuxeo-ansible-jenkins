@@ -1,0 +1,10 @@
+---
+- name: Terraform
+  s3: bucket={{s3_bucket}} region={{s3_region}} object=/{{s3_tools_path}}/terraform.zip mode=geturl
+  changed_when: false
+  failed_when: false
+  register: terraform
+- get_url: url=https://releases.hashicorp.com/terraform/0.8.4/terraform_0.8.4_linux_amd64.zip
+           dest=cache/terraform.zip
+  when: terraform.url is not defined
+
