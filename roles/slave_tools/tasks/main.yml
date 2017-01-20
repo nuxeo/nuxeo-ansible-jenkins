@@ -204,9 +204,6 @@
 - include: nodejs.yml
   tags: nodejs
 
-- include: phantomjs.yml
-  tags: nodejs
-
 # Dart
 - name: Check for dart
   stat: path=/usr/bin/dart
