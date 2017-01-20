@@ -73,6 +73,8 @@
   - libc6-i386
   - g++-multilib
   - libssl-dev
+  - ruby2.3
+  - ruby2.3-dev
   # Android SDK
   - lib32z1
   - lib32ncurses5
@@ -99,6 +101,7 @@
   - python-yaml
   - xmlstarlet
   - gdebi-core
+  tags: apt
 - apt: state=latest name=tcpwatch-httpproxy install_recommends=no
 - pip: name=logchart
 - pip: name=boto
@@ -187,6 +190,10 @@
 
 # Android
 - include: android.yml
+
+# Fastlane
+- include: fastlane.yml
+  tags: fastlane
 
 - name: Spot instance Jenkins callback script
 # use https://qa.nuxeo.org/jenkins/plugin/ec2/AMI-Scripts/ubuntu-ami-setup.sh once ec2 plugin upgraded
@@ -317,4 +324,3 @@
 - include: terraform.yml
   when: not terraform_installed.stat.exists
   tags: terraform
-

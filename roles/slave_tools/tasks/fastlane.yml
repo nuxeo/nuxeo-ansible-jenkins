@@ -1,0 +1,8 @@
+---
+# file: roles/slave_tools/tasks/fastlane.yml
+
+- name: Install the latest version of fastlane
+  gem:
+    name: fastlane
+    state: latest
+    user_install: no
