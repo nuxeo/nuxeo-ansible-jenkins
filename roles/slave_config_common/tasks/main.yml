@@ -111,6 +111,11 @@
       object=/{{s3_config_path}}/keystores/keytabs/krb5.conf dest=/etc/krb5.conf mode=get
       aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}} overwrite=different
 
+- name: googleplay.json
+  s3: bucket={{s3_bucket}} region={{s3_region}}
+      object=/{{s3_config_path}}/googleplay.json dest=/opt/build/hudson/googleplay.json mode=get
+      aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}} overwrite=different
+
 - name: Disable Azure data collection
   shell: azure telemetry --disable
   become_user: jenkins
@@ -136,4 +141,3 @@
 - name: Stop PostgreSQL
   shell: sv down postgresql
   changed_when: false
-
