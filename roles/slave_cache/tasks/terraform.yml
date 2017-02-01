@@ -4,7 +4,7 @@
   changed_when: false
   failed_when: false
   register: terraform
-- get_url: url=https://releases.hashicorp.com/terraform/0.8.4/terraform_0.8.4_linux_amd64.zip
+- get_url: url=https://releases.hashicorp.com/terraform/0.8.5/terraform_0.8.5_linux_amd64.zip
            dest=cache/terraform.zip
   when: terraform.url is not defined
 
