@@ -57,21 +57,20 @@
 - file: path=/tmp/apache-maven-3.2.5-bin.tar.gz state=absent
 
 - name: Check for maven 3.3.x
-  stat: path=/opt/build/tools/apache-maven-3.3.3
+  stat: path=/opt/build/tools/apache-maven-3.3.9
   register: maven33x_installed
 - name: Get maven 3.3.x package
   s3: bucket={{s3_bucket}} region={{s3_region}}
-      object=/{{s3_tools_path}}/apache-maven-3.3.3-bin.tar.gz dest=/tmp/apache-maven-3.3.3-bin.tar.gz mode=get
+      object=/{{s3_tools_path}}/apache-maven-3.3.9-bin.tar.gz dest=/tmp/apache-maven-3.3.9-bin.tar.gz mode=get
       aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}}
   when: not maven33x_installed.stat.exists
 - name: Install maven 3.3.x
-  unarchive: src=/tmp/apache-maven-3.3.3-bin.tar.gz dest=/opt/build/tools copy=no
+  unarchive: src=/tmp/apache-maven-3.3.9-bin.tar.gz dest=/opt/build/tools copy=no
   when: not maven33x_installed.stat.exists
-- file: src=/opt/build/tools/apache-maven-3.3.3 path=/opt/build/tools/maven3.3 state=link
-- file: path=/tmp/apache-maven-3.3.3-bin.tar.gz state=absent
+- file: src=/opt/build/tools/apache-maven-3.3.9 path=/opt/build/tools/maven3.3 state=link
+- file: path=/tmp/apache-maven-3.3.9-bin.tar.gz state=absent
 
 
 - file: src=/opt/build/tools/maven3.3 path=/opt/build/tools/maven3 state=link
 
 - alternatives: name=mvn link=/usr/bin/mvn path=/opt/build/tools/maven3/bin/mvn
-

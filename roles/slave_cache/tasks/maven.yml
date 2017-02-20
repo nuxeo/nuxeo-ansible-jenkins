@@ -36,11 +36,10 @@
   when: maven32x.url is not defined
 
 - name: Maven 3.3.x
-  s3: bucket={{s3_bucket}} region={{s3_region}} object=/{{s3_tools_path}}/apache-maven-3.3.3-bin.tar.gz mode=geturl
+  s3: bucket={{s3_bucket}} region={{s3_region}} object=/{{s3_tools_path}}/apache-maven-3.3.9-bin.tar.gz mode=geturl
   changed_when: false
   failed_when: false
   register: maven33x
-- get_url: url=http://www.us.apache.org/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz
-           dest=cache/apache-maven-3.3.3-bin.tar.gz
+- get_url: url=http://archive.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
+           dest=cache/apache-maven-3.3.9-bin.tar.gz
   when: maven33x.url is not defined
-

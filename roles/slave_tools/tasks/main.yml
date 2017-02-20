@@ -83,6 +83,7 @@
   - s3cmd
   # Funkload requirements
   - python-dev
+  - python-pip
   - python-setuptools
   - python-webunit
   - python-docutils
@@ -90,12 +91,20 @@
   - python-reportlab
   - python-pypdf
   - pgfouine
-  # Drive requirements
-  - python-pip
-  - python-qt4
-  - libffi-dev
-  - python-virtualenv
-  - python-cffi
+  # Drive requirements (for Python compilation)
+  - build-essential
+  - zlib1g-dev
+  - libbz2-dev
+  - libreadline-dev
+  - libsqlite3-dev
+  - llvm
+  - libncurses5-dev
+  - libncursesw5-dev
+  - xz-utils
+  # Drive requirements (for PyQt4 compilation)
+  - qt4-qmake
+  - libqt4-dev
+  - libqtwebkit-dev
   # Useful to have
   - python-lxml
   - python-requests

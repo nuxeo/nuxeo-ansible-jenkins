@@ -245,7 +245,7 @@
   win_msi:
     path: 'c:\cache\installers\msi\TortoiseHG.msi'
   when: not hg_installed.stat.exists
-# When it freezes at thos stage, reboot the windows host and relaunch the script
+# When it freezes at those stage, reboot the windows host and relaunch the script
 
 
 - name: Check for Git
@@ -335,53 +335,6 @@
   raw: 'msiexec /i c:\cache\installers\msi\VCForPython27.msi ALLUSERS=1 /qn'
   when: not vcpython_installed.stat.exists
 
-# Drive stuffs
-
-- name: Check for PyQt4
-  win_stat: path='C:\Python27\Lib\site-packages\PyQt4'
-  register: pyqt4_installed
-- name: Install PyQt4
-  raw: 'start /w c:\cache\installers\exe\PyQt4.exe /S'
-  when: not pyqt4_installed.stat.exists
-- name: Check for Wheel
-  win_stat: path='C:\Python27\scripts\wheel.exe'
-  register: wheel_installed
-- name: Install Wheel
-  raw: 'pip install wheel'
-  when: not wheel_installed.stat.exists
-- name: Check for cx_Freeze
-  win_stat: path='C:\Python27\Lib\site-packages\cx_Freeze'
-  register: cxfreeze_installed
-- name: Install cx_Freeze
-  raw: 'pip install cx_Freeze'
-  when: not cxfreeze_installed.stat.exists
-- name: Check for faulthandler
-  win_stat: path='C:\Python27\Lib\site-packages\faulthandler.pyd'
-  register: faulthandler_installed
-- name: Install faulthandler
-  raw: 'pip install faulthandler'
-  when: not faulthandler_installed.stat.exists
-- name: Check for psutil
-  win_stat: path='C:\Python27\Lib\site-packages\psutil'
-  register: psutil_installed
-- name: Install psutil
-  raw: 'pip install psutil'
-  when: not psutil_installed.stat.exists
-- name: Check for yappi
-  win_stat: path='C:\Python27\scripts\yappi.exe'
-  register: yappi_installed
-- name: Install yappi
-  raw: 'pip install yappi'
-  when: not yappi_installed.stat.exists
-- name: check for PyCrypto
-  win_stat: path='C:\Python27\Lib/site-packages\pycrypto'
-  register: pycrypto_installed
-- name: Install PyCrypto
-  raw: 'pip install pycrypto'
-  when: not pycrypto_installed.stat.exists
-
-# pywin32: install manually from http://sourceforge.net/projects/pywin32/files/pywin32/
-
 
 # Install after Python, otherwise Python 3 is in the path
 - name: Check for LibreOffice
@@ -394,6 +347,3 @@
 - name: Add LibreOffice to path
   script: libreoffice.ps1
   when: not libreoffice_installed.stat.exists
-
-
-
