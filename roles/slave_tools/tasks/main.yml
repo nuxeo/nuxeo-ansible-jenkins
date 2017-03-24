@@ -37,6 +37,7 @@
   with_items:
   - ntp
   - python-httplib2
+  - python-virtualenv
   - git
   - mercurial
   - subversion
