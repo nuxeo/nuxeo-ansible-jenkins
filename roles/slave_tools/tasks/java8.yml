@@ -13,7 +13,7 @@
 - name: Create JDK 8 symlink
   file: src=/usr/lib/jvm/jdk1.8.0_77 path=/usr/lib/jvm/java-8 state=link force=yes
   when: not java8_installed.stat.exists
-- name: Install JDK 8 alternative
-  command: update-alternatives --install /usr/bin/java java /usr/lib/jvm/java-8/jre/bin/java 1081
-  when: not java8_installed.stat.exists
+#- name: Install JDK 8 alternative
+#  command: update-alternatives --install /usr/bin/java java /usr/lib/jvm/java-8/jre/bin/java 1081
+#  when: not java8_installed.stat.exists
 - file: path=/tmp/jdk-8-linux-x64.tgz state=absent
