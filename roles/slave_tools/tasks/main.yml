@@ -112,6 +112,7 @@
   - python-yaml
   - xmlstarlet
   - gdebi-core
+  - shunit2
   tags: apt
 - apt: state=latest name=tcpwatch-httpproxy install_recommends=no
 - pip: name=logchart
@@ -180,8 +181,11 @@
   tags: java,java7
 - include: java8.yml
   tags: java,java8
-- name: Set default to Java 8
-  alternatives: name=java path=/usr/lib/jvm/java-8/jre/bin/java
+- name: OpenJDK 8
+  apt: name=openjdk-8-jdk state=latest
+  tags: java,java8
+- name: Set default to OpenJDK 8
+  alternatives: name=java path=/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
   tags: java,java8
 
 # Maven
