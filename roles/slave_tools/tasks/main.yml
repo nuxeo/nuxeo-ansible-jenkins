@@ -279,7 +279,7 @@
   when: not docker_installed.stat.exists
   tags: docker
 - name: Docker compose
-  get_url: url=https://github.com/docker/compose/releases/download/1.7.1/docker-compose-Linux-x86_64
+  get_url: url=https://github.com/docker/compose/releases/download/1.14.0/docker-compose-Linux-x86_64
           dest=/usr/local/bin/docker-compose
 - file: path=/usr/local/bin/docker-compose mode=0755
 
