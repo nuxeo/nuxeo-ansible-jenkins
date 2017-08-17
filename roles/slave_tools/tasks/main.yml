@@ -77,6 +77,7 @@
   - libssl-dev
   - ruby2.3
   - ruby2.3-dev
+  - aspell
   # Android SDK
   - lib32z1
   - lib32ncurses5
