@@ -15,7 +15,7 @@
   unarchive: src=/tmp/android-sdk-24.4.1.tgz dest=/opt/build/tools copy=no
   when: not android_installed.stat.exists
 - name: Install Android SDK packages
-  shell: echo y | android update sdk --all --no-ui --filter tools,platform-tools,build-tools-26.0.1,android-23,android-25,extra-android-m2repository,extra-google-m2repository
+  shell: echo y | android update sdk --all --no-ui --filter tools,platform-tools,build-tools-23.0.1,build-tools-26.0.1,android-23,android-25,extra-android-m2repository,extra-google-m2repository
   environment:
     PATH: "/opt/build/tools/android-sdk-linux/tools:/opt/build/tools/android-sdk-linux/platform-tools:{{ansible_env.PATH}}"
   when: not android_installed.stat.exists
