@@ -75,6 +75,7 @@
   - libc6-i386
   - g++-multilib
   - libssl-dev
+  - jq
   # Amazon S3
   - s3cmd
   # Funkload requirements
