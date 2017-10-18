@@ -93,7 +93,7 @@
   - name: gulp
     version: 3.9.1
   - name: bower
-    version: 1.8.0
+    version: 1.8.2
   - name: unicode
     version: 0.6.1
   environment:
