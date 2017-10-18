@@ -34,6 +34,7 @@
 - file: path=/opt/jenkins/.ssh/authorized_keys state=file owner=jenkins group=jenkins mode=0600
 - file: path=/opt/jenkins/.profile state=file owner=jenkins group=jenkins mode=0600
 - file: path=/opt/jenkins/.netrc state=file owner=jenkins group=jenkins mode=0600
+- file: path=/opt/jenkins/.bowerrc state=file owner=jenkins group=jenkins mode=0600
 - file: path=/opt/jenkins/.s3cfg state=file owner=jenkins group=jenkins mode=0600
 - file: path=/opt/jenkins/.docker state=directory owner=jenkins group=jenkins mode=0700
 - file: path=/opt/jenkins/.docker/config.json state=file owner=jenkins group=jenkins mode=0600
