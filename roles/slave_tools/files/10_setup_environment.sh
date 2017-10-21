@@ -6,6 +6,8 @@ fi
 
 HOST_IP=$(ip route show | grep '^default' | awk '{print $3}')
 
+export SHUNIT2_HOME=/usr/bin
+
 if [ -n "${MULTIDB}" ]; then
     i=1
     until [ $(redis-cli -h ${HOST_IP} --csv setnx slave:${MULTIDB}$i $(hostname)) == "1" ]; do
@@ -288,4 +290,3 @@ fi
 
 
 touch /init_done
-

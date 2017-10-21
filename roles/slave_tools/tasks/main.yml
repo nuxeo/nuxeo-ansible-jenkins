@@ -97,6 +97,7 @@
   - python-requests
   - python-yaml
   - xmlstarlet
+  - shunit2
 - apt: state=latest name=tcpwatch-httpproxy install_recommends=no
 - pip: name=logchart
 - pip: name=boto
@@ -292,4 +293,3 @@
 - include: postgresql.yml
 
 - include: git-lfs.yml
-
