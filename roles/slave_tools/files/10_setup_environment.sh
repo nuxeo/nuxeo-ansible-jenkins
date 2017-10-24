@@ -27,6 +27,8 @@ echo -n ${SLAVE_NAME} > /slaveid
 echo ":1" > /etc/container_environment/DISPLAY
 echo "DISPLAY=:1" >>  /etc/environment
 
+echo "/usr/bin" > /etc/container_environment/SHUNIT2_HOME
+echo "SHUNIT2_HOME=/usr/bin" >>  /etc/environment
 
 # Add defined DB variables to environment
 for v in HOST PORT NAME USER PASS ADMINNAME ADMINUSER ADMINPASS; do
@@ -288,4 +290,3 @@ fi
 
 
 touch /init_done
-
