@@ -341,3 +341,6 @@
 - include: terraform.yml
   when: not terraform_installed.stat.exists
   tags: terraform
+
+- include: golang.yml
+
