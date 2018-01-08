@@ -29,3 +29,13 @@
     creates: cache/jdk-8u77-linux-x64.tar.gz
   when: java8.url is not defined
 
+- name: OpenJDK 9
+  s3: bucket={{s3_bucket}} region={{s3_region}} object=/{{s3_tools_path}}/openjdk-9.0.1_linux-x64_bin.tar.gz mode=geturl
+  changed_when: false
+  failed_when: false
+  register: openjdk9
+- command: "wget -q -Ocache/openjdk-9.0.1_linux-x64_bin.tar.gz --no-check-certificate 'http://download.java.net/java/GA/jdk9/9.0.1/binaries/openjdk-9.0.1_linux-x64_bin.tar.gz'"
+  args:
+    creates: cache/openjdk-9.0.1_linux-x64_bin.tar.gz
+  when: openjdk9.url is not defined
+

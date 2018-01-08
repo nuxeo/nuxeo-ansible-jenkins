@@ -187,8 +187,7 @@
 - name: OpenJDK 8
   apt: name=openjdk-8-jdk state=latest
   tags: java,java8
-- name: OpenJDK 9
-  apt: name=openjdk-9-jdk state=latest dpkg_options=force-confdef,force-confold,force-overwrite
+- include: java9.yml
   tags: java, java9
 
 - name: Set default to OpenJDK 8

@@ -1,0 +1,20 @@
+---
+- name: Check for OpenJDK 9
+  stat: path=/usr/lib/jvm/jdk-9.0.1
+  register: java9_installed
+- name: Get Java9 package
+  s3: bucket={{s3_bucket}} region={{s3_region}}
+      object=/{{s3_tools_path}}/openjdk-9.0.1_linux-x64_bin.tar.gz dest=/tmp/jdk-9-linux-x64.tar.gz mode=get
+      aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}}
+  when: not java9_installed.stat.exists
+- name: Install JDK 9
+  unarchive: src=/tmp/jdk-9-linux-x64.tar.gz dest=/usr/lib/jvm copy=no
+  when: not java9_installed.stat.exists
+- name: Create JDK 9 symlink
+  file: src=/usr/lib/jvm/jdk-9.0.1 path=/usr/lib/jvm/java-9 state=link force=yes
+  when: not java9_installed.stat.exists
+#- name: Install JDK 9 alternative
+#  command: update-alternatives --install /usr/bin/java java /usr/lib/jvm/java-9/jre/bin/java 1091
+#  when: not java9_installed.stat.exists
+- file: path=/tmp/jdk-9-linux-x64.tgz state=absent
+
