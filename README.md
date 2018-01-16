@@ -89,14 +89,14 @@ Delete unused old AMIs. Delete unused associated "snapshot" volumes.
 First build the nuxeo/jenkins-base image:
 Add your id\_rsa.pub in docker/files/id\_rsa.pub (so ansible can connect later) then:
 
-    docker build -t nuxeo/jenkins-base docker
+    docker build -t nuxeo/jenkins-base-9.10 docker
 
 You should update that base image now and then to get package updates, that will make the ansible build faster.
 
 
 Run a container from that image, exporting the SSH port locally:
 
-    docker run -d -t -i -p 127.0.0.1:2222:22 --name=slave-common nuxeo/jenkins-base
+    docker run -d -t -i -p 127.0.0.1:2222:22 --name=slave-common nuxeo/jenkins-base-9.10
 
 Make an inventory file for ansible to access this container:
 
@@ -113,12 +113,12 @@ Run ansible normally on this container:
 
 Commit this container:
 
-    docker commit slave-common nuxeo/jenkins-common
+    docker commit slave-common nuxeo/jenkins-common-9.10
 
 Run pub/priv containers from that image:
 
-    docker run -d -t -i -p 127.0.0.1:2223:22 --name=slave-pub nuxeo/jenkins-common
-    docker run -d -t -i -p 127.0.0.1:2224:22 --name=slave-priv nuxeo/jenkins-common
+    docker run -d -t -i -p 127.0.0.1:2223:22 --name=slave-pub nuxeo/jenkins-common-9.10
+    docker run -d -t -i -p 127.0.0.1:2224:22 --name=slave-priv nuxeo/jenkins-common-9.10
 
 Make inventory files to access those containers:
 
@@ -143,22 +143,22 @@ Run ansible on those containers:
 
 Commit those containers:
 
-    docker commit slave-pub nuxeo/jenkins-pub
-    docker commit slave-priv nuxeo/jenkins-priv
+    docker commit slave-pub nuxeo/jenkins-pub-9.10
+    docker commit slave-priv nuxeo/jenkins-priv-9.10
 
 Tag the image for the remote registry:
 
-    docker tag nuxeo/jenkins-pub dockerpriv.nuxeo.com:443/nuxeo/jenkins-slave
-    docker tag nuxeo/jenkins-pub dockerpriv.nuxeo.com:443/nuxeo/jenkins-ondemand
-    docker tag nuxeo/jenkins-pub dockerpriv.nuxeo.com:443/nuxeo/jenkins-check
-    docker tag nuxeo/jenkins-priv dockerpriv.nuxeo.com:443/nuxeo/jenkins-slavepriv
+    docker tag nuxeo/jenkins-pub-9.10 dockerpriv.nuxeo.com:443/nuxeo/jenkins-slave-9.10
+    docker tag nuxeo/jenkins-pub-9.10 dockerpriv.nuxeo.com:443/nuxeo/jenkins-ondemand-9.10
+    docker tag nuxeo/jenkins-pub-9.10 dockerpriv.nuxeo.com:443/nuxeo/jenkins-check-9.10
+    docker tag nuxeo/jenkins-priv-9.10 dockerpriv.nuxeo.com:443/nuxeo/jenkins-slavepriv-9.10
 
 Push the image:
 
-    docker push dockerpriv.nuxeo.com:443/nuxeo/jenkins-slave
-    docker push dockerpriv.nuxeo.com:443/nuxeo/jenkins-ondemand
-    docker push dockerpriv.nuxeo.com:443/nuxeo/jenkins-check
-    docker push dockerpriv.nuxeo.com:443/nuxeo/jenkins-slavepriv
+    docker push dockerpriv.nuxeo.com:443/nuxeo/jenkins-slave-9.10
+    docker push dockerpriv.nuxeo.com:443/nuxeo/jenkins-ondemand-9.10
+    docker push dockerpriv.nuxeo.com:443/nuxeo/jenkins-check-9.10
+    docker push dockerpriv.nuxeo.com:443/nuxeo/jenkins-slavepriv-9.10
 
 You can then pull the image on the slaves hosts and restart the slaves containers with the new image.
 
