@@ -19,3 +19,12 @@
   become_user: jenkins
 - file: path=/opt/jenkins/.m2/settings.xml state=file owner=jenkins group=jenkins
 
+- name: Get jenkins base home from S3
+  command: aws s3 sync s3://{{s3_bucket}}/{{s3_config_path}}/jenkins_home/ /opt/jenkins --region={{s3_region}}
+  environment:
+    AWS_ACCESS_KEY_ID: "{{aws_id.msg}}"
+    AWS_SECRET_ACCESS_KEY: "{{aws_secret.msg}}"
+  register: homesync
+  changed_when: homesync.stdout != ""
+- file: path=/opt/jenkins/.docker state=directory owner=jenkins group=jenkins mode=0700
+- file: path=/opt/jenkins/.docker/config.json state=file owner=jenkins group=jenkins mode=0600
