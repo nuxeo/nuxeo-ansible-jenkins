@@ -24,7 +24,7 @@
   environment:
     AWS_ACCESS_KEY_ID: "{{aws_id.msg}}"
     AWS_SECRET_ACCESS_KEY: "{{aws_secret.msg}}"
-  register: homesync
-  changed_when: homesync.stdout != ""
+  register: homesyncpriv
+  changed_when: homesyncpriv.stdout != ""
 - file: path=/opt/jenkins/.docker state=directory owner=jenkins group=jenkins mode=0700
 - file: path=/opt/jenkins/.docker/config.json state=file owner=jenkins group=jenkins mode=0600
