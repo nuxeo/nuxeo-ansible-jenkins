@@ -8,6 +8,9 @@ MAINTAINER Nuxeo Packagers <packagers@nuxeo.com>
 RUN echo "deb http://ubuntu.mirrors.ovh.net/ftp.ubuntu.com/ubuntu/ xenial main restricted universe multiverse" > /etc/apt/sources.list
 RUN echo "deb http://ubuntu.mirrors.ovh.net/ftp.ubuntu.com/ubuntu/ xenial-updates main restricted universe multiverse" >> /etc/apt/sources.list
 RUN echo "deb http://security.ubuntu.com/ubuntu xenial-security main restricted universe multiverse" >> /etc/apt/sources.list
+
+RUN echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections
+
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update || true
 RUN apt-get -q -y dist-upgrade
@@ -15,7 +18,10 @@ RUN apt-get -q -y install locales unzip sudo
 RUN locale-gen en_US.UTF-8
 RUN dpkg-reconfigure locales
 RUN update-locale LANG=en_US.UTF-8
-RUN apt-get install -q -y postgresql libpq-dev python-psycopg2 libreoffice imagemagick poppler-utils ffmpeg2theora ufraw libwpd-tools git redis-server redis-tools rsync xvfb x11vnc fluxbox
+RUN apt-get install -q -y postgresql libpq-dev python-psycopg2 libreoffice imagemagick poppler-utils ffmpeg2theora ufraw libwpd-tools git redis-server redis-tools rsync xvfb x11vnc fluxbox ttf-mscorefonts-installer
+
+# Updating fonts
+RUN fc-cache -f -v
 
 #RUN git clone https://github.com/nuxeo/ffmpeg-nuxeo.git
 #ENV BUILD_YASM true
