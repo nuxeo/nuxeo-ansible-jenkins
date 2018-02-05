@@ -50,3 +50,32 @@
   when: not ff42_installed.stat.exists
 - file: path=/tmp/firefox-42.0.tar.bz2 state=absent
 
+- name: Check for Firefox 58
+  stat: path=/opt/build/tools/firefox-58
+  register: ff58_installed
+- name: Get Firefox 58 package
+  s3: bucket={{s3_bucket}} region={{s3_region}}
+      object=/{{s3_tools_path}}/firefox-58.0.tar.bz2 dest=/tmp/firefox-58.0.tar.bz2 mode=get
+      aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}}
+  when: not ff58_installed.stat.exists
+- name: Install Firefox 58
+  unarchive: src=/tmp/firefox-58.0.tar.bz2 dest=/opt/build/tools copy=no
+  when: not ff58_installed.stat.exists
+- name: Fix Firefox 58 directory
+  command: creates=/opt/build/tools/firefox-58
+           mv /opt/build/tools/firefox /opt/build/tools/firefox-58
+  when: not ff58_installed.stat.exists
+- file: path=/tmp/firefox-58.0.tar.bz2 state=absent
+
+- name: Check for GeckoDriver 0.19.1
+  stat: path=/opt/build/tools/geckodriver-0.19.1
+  register: geckodriver0191_installed
+- name: Get GeckoDriver 0.19.1 package
+  s3: bucket={{s3_bucket}} region={{s3_region}}
+      object=/{{s3_tools_path}}/geckodriver-v0.19.1-linux64.tar.gz dest=/tmp/geckodriver-v0.19.1-linux64.tar.gz mode=get
+      aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}}
+  when: not geckodriver0191_installed.stat.exists
+- name: Install GeckoDriver 0.19.1
+  unarchive: src=/tmp/geckodriver-v0.19.1-linux64.tar.gz dest=/opt/build/tools copy=no
+  when: not geckodriver0191_installed.stat.exists
+
