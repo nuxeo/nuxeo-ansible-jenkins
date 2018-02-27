@@ -45,6 +45,7 @@
   - ant
   - ant-contrib
   - imagemagick
+  - mediainfo
   - ffmpeg2theora
   - lynx
   - sysstat
