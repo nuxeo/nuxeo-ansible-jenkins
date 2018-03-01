@@ -12,4 +12,6 @@
   file: path=/etc/service/mysql state=directory
 - name: Add MySQL startup script
   copy: src=mysql dest=/etc/service/mysql/run mode=0755
+- name: Create mysqld run dir
+  file: path=/var/run/mysqld state=directory group=mysql owner=mysql mode=0755
 
