@@ -27,47 +27,89 @@
     dest: 'wincache/installers/zip/ProcessExplorer.zip'
 
 - name: Get JDK 6 installer
-  command: "wget -q -Owincache/installers/exe/jdk6.exe --no-check-certificate --header 'Cookie: oraclelicense=accept-securebackup-cookie' 'http://download.oracle.com/otn-pub/java/jdk/6u45-b06/jdk-6u45-windows-x64.exe'"
+  s3: bucket={{s3_bucket}} region={{s3_region}} object=/{{s3_tools_path}}/installers/exe/jdk6.exe mode=geturl
+  changed_when: false
+  failed_when: false
+  register: jdk6
+- command: "wget -q -Owincache/installers/exe/jdk6.exe --no-check-certificate --header 'Cookie: oraclelicense=accept-securebackup-cookie' 'http://download.oracle.com/otn-pub/java/jdk/6u45-b06/jdk-6u45-windows-x64.exe'"
   args:
     creates: wincache/installers/exe/jdk6.exe
+  when: jdk6.url is not defined
+
 - name: Get JDK 7 installer
-  command: "wget -q -Owincache/installers/exe/jdk7.exe --no-check-certificate --header 'Cookie: oraclelicense=accept-securebackup-cookie' 'http://download.oracle.com/otn-pub/java/jdk/7u76-b13/jdk-7u76-windows-x64.exe'"
+  s3: bucket={{s3_bucket}} region={{s3_region}} object=/{{s3_tools_path}}/installers/exe/jdk7.exe mode=geturl
+  changed_when: false
+  failed_when: false
+  register: jdk7
+- command: "wget -q -Owincache/installers/exe/jdk7.exe --no-check-certificate --header 'Cookie: oraclelicense=accept-securebackup-cookie' 'http://download.oracle.com/otn-pub/java/jdk/7u76-b13/jdk-7u76-windows-x64.exe'"
   args:
     creates: wincache/installers/exe/jdk7.exe
+  when: jdk7.url is not defined
+
 - name: Get JDK 8 installer
-  command: "wget -q -Owincache/installers/exe/jdk8.exe --no-check-certificate --header 'Cookie: oraclelicense=accept-securebackup-cookie' 'ttp://download.oracle.com/otn-pub/java/jdk/8u60-b27/jdk-8u60-windows-x64.exe'"
+  s3: bucket={{s3_bucket}} region={{s3_region}} object=/{{s3_tools_path}}/installers/exe/jdk8.exe mode=geturl
+  changed_when: false
+  failed_when: false
+  register: jdk8
+- command: "wget -q -Owincache/installers/exe/jdk8.exe --no-check-certificate --header 'Cookie: oraclelicense=accept-securebackup-cookie' 'ttp://download.oracle.com/otn-pub/java/jdk/8u60-b27/jdk-8u60-windows-x64.exe'"
   args:
     creates: wincache/installers/exe/jdk8.exe
+  when: jdk8.url is not defined
 
 - name: Maven 2.2.1
   get_url:
     url: 'http://archive.apache.org/dist/maven/binaries/apache-maven-2.2.1-bin.zip'
     dest: 'wincache/installers/zip/maven-2.2.1.zip'
+
 - name: Maven 3.0.5
   get_url:
     url: 'http://www.us.apache.org/dist/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.zip'
     dest: 'wincache/installers/zip/maven-3.0.5.zip'
+
 - name: Maven 3.1.1
   get_url:
     url: 'http://www.us.apache.org/dist/maven/maven-3/3.1.1/binaries/apache-maven-3.1.1-bin.zip'
     dest: 'wincache/installers/zip/maven-3.1.1.zip'
+
 - name: Get Maven 3.2.5
   get_url:
     url: 'http://www.us.apache.org/dist/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.zip'
     dest: 'wincache/installers/zip/maven-3.2.5.zip'
-- name: Get m2 settings
-  copy: src=/opt/build/hudson/m2windows/settings.xml dest=wincache/m2_settings.xml
-- name: Get m2 seed repository
-  synchronize: src=/opt/build/m2_repo_seed dest=wincache/ recursive=yes delete=yes
 
+- name: Get m2 settings
+  s3: bucket={{s3_bucket}} region={{s3_region}} object=/{{s3_tools_path}}/m2_settings.xml mode=geturl
+  changed_when: false
+  failed_when: false
+  register: m2settings
+- copy: src=/opt/build/hudson/m2windows/settings.xml dest=wincache/m2_settings.xml
+  args:
+    creates: wincache/m2_settings.xml
+  when: m2settings.url is not defined
+
+#- name: Get m2 seed repository
+#  synchronize: src=/opt/build/m2_repo_seed dest=wincache/ recursive=yes delete=yes
 
 - name: Get instance.clid
-  copy: src=/opt/build/hudson/instance.clid dest=wincache/instance.clid
+  s3: bucket={{s3_bucket}} region={{s3_region}} object=/{{s3_tools_path}}/instance.clid mode=geturl
+  changed_when: false
+  failed_when: false
+  register: clid
+- copy: src=/opt/build/hudson/instance.clid dest=wincache/instance.clid
+  args:
+    creates: wincache/instance.clid
+  when: clid.url is not defined
 
 - name: Get Ant
-  get_url:
+  s3: bucket={{s3_bucket}} region={{s3_region}} object=/{{s3_tools_path}}/installers/zip/apache-ant-1.9.6.zip mode=geturl
+  changed_when: false
+  failed_when: false
+  register: ant
+- get_url:
     url: 'http://www.us.apache.org/dist/ant/binaries/apache-ant-1.9.6-bin.zip'
     dest: 'wincache/installers/zip/apache-ant-1.9.6.zip'
+  args:
+    creates: wincache/installers/zip/apache-ant-1.9.6.zip 
+  when: ant.url is not defined
 
 - name: Get Gradle
   get_url:
@@ -114,9 +156,16 @@
     dest: 'wincache/installers/exe/Git-2.16.2-64-bit.exe'
 
 - name: Get LibreOffice
-  get_url:
+  s3: bucket={{s3_bucket}} region={{s3_region}} object=/{{s3_tools_path}}/installers/msi/libreoffice.msi mode=geturl
+  changed_when: false
+  failed_when: false
+  register: libreoffice
+- get_url:
     url: 'http://download.documentfoundation.org/libreoffice/stable/4.4.4/win/x86/LibreOffice_4.4.4_Win_x86.msi'
     dest: 'wincache/installers/msi/libreoffice.msi'
+  args:
+    creates: wincache/installers/msi/libreoffice.msi
+  when: libreoffice.url is not defined
 
 - name: Get PhantomJS
   get_url:
