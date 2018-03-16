@@ -249,10 +249,10 @@
 
 
 - name: Check for Git
-  win_stat: path='C:\Program Files (x86)\git\bin\git.exe'
+  win_stat: path='C:\Program Files\git\bin\git.exe'
   register: git_installed
 - name: Install Git
-  raw: 'start /w c:\cache\installers\exe\msysgit.exe /SILENT /NORESTART'
+  raw: 'start /w c:\cache\installers\exe\Git-2.16.2-64-bit.exe /SILENT /NORESTART'
   when: not git_installed.stat.exists
 - name: Add git to path
   script: git.ps1
