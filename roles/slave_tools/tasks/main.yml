@@ -46,6 +46,7 @@
   - ant-contrib
   - imagemagick
   - mediainfo
+  - ffmpeg
   - ffmpeg2theora
   - lynx
   - sysstat
@@ -136,21 +137,21 @@
   when: "'docker' not in group_names"
 
 # FFmpeg build with x264, vpx and AAC support if needed
-- name: Check for ffmpeg
-  command: dpkg-query -W ffmpeg-nuxeo
-  register: ffmpegcheck
-  failed_when: ffmpegcheck.rc > 1
-  changed_when: false
-- name: Get ffmpeg package
-  s3: bucket={{s3_bucket}} region={{s3_region}}
-      object=/{{s3_tools_path}}/ffmpeg-nuxeo_2.8.12-1_amd64.deb
-      dest=/tmp/ffmpeg-nuxeo_2.8.12-1_amd64.deb mode=get
-      aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}}
-  when: ffmpegcheck.rc == 1
-- name: Install ffmpeg
-  command: dpkg -i /tmp/ffmpeg-nuxeo_2.8.12-1_amd64.deb
-  when: ffmpegcheck.rc == 1
-- file: path=/tmp/ffmpeg-nuxeo_2.8.12-1_amd64.deb state=absent
+#- name: Check for ffmpeg
+#  command: dpkg-query -W ffmpeg-nuxeo
+#  register: ffmpegcheck
+#  failed_when: ffmpegcheck.rc > 1
+#  changed_when: false
+#- name: Get ffmpeg package
+#  s3: bucket={{s3_bucket}} region={{s3_region}}
+#      object=/{{s3_tools_path}}/ffmpeg-nuxeo_2.8.12-1_amd64.deb
+#      dest=/tmp/ffmpeg-nuxeo_2.8.12-1_amd64.deb mode=get
+#      aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}}
+#  when: ffmpegcheck.rc == 1
+#- name: Install ffmpeg
+#  command: dpkg -i /tmp/ffmpeg-nuxeo_2.8.12-1_amd64.deb
+#  when: ffmpegcheck.rc == 1
+#- file: path=/tmp/ffmpeg-nuxeo_2.8.12-1_amd64.deb state=absent
 
 # CCExtractor pre-built from sources
 - name: Check for ccextractor
