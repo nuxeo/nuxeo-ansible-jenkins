@@ -257,12 +257,7 @@
 - include: mysql.yml
 
 # Redis
-- name: Upgrade/install Redis packages
-  apt: state=latest name={{item}}
-  with_items:
-  - redis-server
-  - redis-tools
-  tags: redis
+- include: redis.yml
 
 # Azure CLI
 - name: Install Azure CLI
