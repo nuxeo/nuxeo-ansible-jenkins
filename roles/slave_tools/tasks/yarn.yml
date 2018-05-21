@@ -1,0 +1,14 @@
+---
+- name: Get the yarn Linux package signing key
+  apt_key: url=https://dl.yarnpkg.com/debian/pubkey.gpg state=present
+- stat: path=/etc/apt/sources.list.d/yarn.list
+  register: yarn_apt_rc
+- name: Add yarn stable repo
+  copy: content="deb [arch=amd64] https://dl.yarnpkg.com/debian/ stable main" dest=/etc/apt/sources.list.d/yarn.list
+  when: yarn_apt_rc.stat.exists == false
+- name: Update apt cache
+  apt: update_cache=yes
+  when: yarn_apt_rc.stat.exists == false
+- name: Install yarn
+  apt: pkg=yarn state=latest
+  when: yarn_apt_rc.stat.exists == false
