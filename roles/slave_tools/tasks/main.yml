@@ -80,6 +80,7 @@
   - ruby2.3-dev
   - aspell
   - jq
+  - net-tools
   # Android SDK
   - lib32z1
   - lib32ncurses5
