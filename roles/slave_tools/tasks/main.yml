@@ -233,6 +233,14 @@
 - include: nodejs.yml
   tags: nodejs
 
+# yarn
+- name: Check for yarn
+  stat: path=/usr/bin/yarn
+  register: yarninstalled
+- include: yarn.yml
+  when: not yarninstalled.stat.exists
+  tags: yarn
+
 # Dart
 - name: Check for dart
   stat: path=/usr/bin/dart
@@ -343,4 +351,3 @@
   tags: terraform
 
 - include: golang.yml
-
