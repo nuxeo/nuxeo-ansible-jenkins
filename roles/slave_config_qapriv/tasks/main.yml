@@ -11,13 +11,37 @@
   fail: msg="You must have AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in your environment"
   when: aws_id.msg == "" or aws_secret.msg == ""
 
-- name: Set Firefox 24 as default
-  alternatives: name=firefox link=/usr/bin/firefox path=/opt/build/tools/firefox-24/firefox
+- name: Install Firefox 24
+  stat: path=/opt/build/tools/firefox-24
+  register: ff24_installed
 - s3: bucket={{s3_bucket}} region={{s3_region}}
-      object=/{{s3_config_path}}/settings.xml dest=//opt/jenkins/.m2/settings.xml mode=get
-      aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}} overwrite=different
-  become_user: jenkins
-- file: path=/opt/jenkins/.m2/settings.xml state=file owner=jenkins group=jenkins
+      object=/{{s3_tools_path}}/firefox-24.0.tar.bz2 dest=/tmp/firefox-24.0.tar.bz2 mode=get
+      aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}}
+  when: not ff24_installed.stat.exists
+- unarchive: src=/tmp/firefox-24.0.tar.bz2 dest=/opt/build/tools copy=no
+  when: not ff24_installed.stat.exists
+
+- command: creates=/opt/build/tools/firefox-24
+           mv /opt/build/tools/firefox /opt/build/tools/firefox-24
+  when: not ff24_installed.stat.exists
+- file: path=/tmp/firefox-24.0.tar.bz2 state=absent
+
+- name: Install Firefox 42
+  stat: path=/opt/build/tools/firefox-42
+  register: ff42_installed
+- s3: bucket={{s3_bucket}} region={{s3_region}}
+      object=/{{s3_tools_path}}/firefox-42.0.tar.bz2 dest=/tmp/firefox-42.0.tar.bz2 mode=get
+      aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}}
+  when: not ff42_installed.stat.exists
+- unarchive: src=/tmp/firefox-42.0.tar.bz2 dest=/opt/build/tools copy=no
+  when: not ff42_installed.stat.exists
+- command: creates=/opt/build/tools/firefox-42
+           mv /opt/build/tools/firefox /opt/build/tools/firefox-42
+  when: not ff42_installed.stat.exists
+- file: path=/tmp/firefox-42.0.tar.bz2 state=absent
+
+- name: Set Firefox 42 as default
+  alternatives: name=firefox link=/usr/bin/firefox path=/opt/build/tools/firefox-42/firefox
 
 - name: Get jenkins base home from S3
   command: aws s3 sync s3://{{s3_bucket}}/{{s3_config_path}}/jenkins_home/ /opt/jenkins --region={{s3_region}}
