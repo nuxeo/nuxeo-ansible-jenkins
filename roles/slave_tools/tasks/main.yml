@@ -348,3 +348,5 @@
 
 - include: golang.yml
 
+- include: wkhtmltopdf.yml
+
