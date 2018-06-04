@@ -352,3 +352,5 @@
   tags: terraform
 
 - include: golang.yml
+
+- include: wkhtmltopdf.yml
