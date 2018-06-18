@@ -2,6 +2,28 @@
 #
 # VERSION               0.0.1
 
+#
+# (C) Copyright 2018 Nuxeo (http://nuxeo.com/) and others.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Contributors:
+#     slacoin
+#     atimic
+#
+
+
+
 FROM       phusion/baseimage:0.9.19
 MAINTAINER Nuxeo Packagers <packagers@nuxeo.com>
 
@@ -30,7 +52,7 @@ RUN fc-cache -f -v
 
 RUN sed -i 's/daemonize yes/daemonize no/g' /etc/redis/redis.conf
 RUN mkdir /etc/service/redis
-ADD files/redis /etc/service/redis/run
+ADD ${BASE:-.}/files/redis /etc/service/redis/run
 RUN chmod +x /etc/service/redis/run
 
 # Add sudoer user
@@ -41,19 +63,19 @@ RUN echo "\nubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 RUN useradd -d /opt/jenkins -m -s /bin/bash jenkins
 
 RUN mkdir /etc/service/xvfb
-ADD files/xvfb /etc/service/xvfb/run
+ADD ${BASE:-.}/files/xvfb /etc/service/xvfb/run
 RUN chmod +x /etc/service/xvfb/run
 
 RUN mkdir /etc/service/x11vnc
-ADD files/x11vnc /etc/service/x11vnc/run
+ADD ${BASE:-.}/files/x11vnc /etc/service/x11vnc/run
 RUN chmod +x /etc/service/x11vnc/run
 
 RUN mkdir /etc/service/fluxbox
-ADD files/fluxbox /etc/service/fluxbox/run
+ADD ${BASE:-.}/files/fluxbox /etc/service/fluxbox/run
 RUN chmod +x /etc/service/fluxbox/run
 
 RUN mkdir /home/ubuntu/.ssh
-ADD files/id_rsa.pub /home/ubuntu/.ssh/authorized_keys
+ADD ${BASE:-.}/files/id_rsa.pub /home/ubuntu/.ssh/authorized_keys
 RUN chown -R ubuntu:ubuntu /home/ubuntu/.ssh
 RUN chmod 0600 /home/ubuntu/.ssh/authorized_keys
 RUN chmod 0700 /home/ubuntu/.ssh
@@ -65,7 +87,7 @@ EXPOSE 22
 
 RUN touch /etc/service/cron/down
 
-ADD files/rc.local /etc/rc.local
+ADD ${BASE:-.}/files/rc.local /etc/rc.local
 RUN chmod +x /etc/rc.local
 
 CMD ["/sbin/my_init"]
