@@ -87,9 +87,9 @@ Delete unused old AMIs. Delete unused associated "snapshot" volumes.
 ### Docker image generation
 
 First build the nuxeo/jenkins-base image:
-Add your id\_rsa.pub in docker/files/id\_rsa.pub (so ansible can connect later) then:
+Add your id\_rsa.pub in docker/files/base/id\_rsa.pub (so ansible can connect later) then:
 
-    docker build -t nuxeo/jenkins-base docker
+    docker build -t nuxeo/jenkins-base docker/base
 
 You should update that base image now and then to get package updates, that will make the ansible build faster.
 
