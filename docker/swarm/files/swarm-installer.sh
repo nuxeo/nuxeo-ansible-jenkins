@@ -18,6 +18,43 @@ diff -u -N -r swarm-client/swarm.opts $installDir/swarm.opts
 +opts="\$opts -labelsFile $installDir/swarm.labels"
 +opts="\$opts --toolLocation java-7-sun=/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home/ --toolLocation java-8-oracle=/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/"
 diff -u -N -r $installDir/jenkins.secret swarm-client/jenkins.secret
+--- swarm-client/swarm.env	1970-01-01 01:00:00.000000000 +0100
++++ swarm-client/swarm.env      2018-06-29 16:41:20.661429829 +0200
+@@ -0,0 +1,33 @@
++DISPLAY=:1
++NX_DB_PASS=nuxeo
++NX_DB_USER=nuxeo
++NX_MSSQL_DB_ADMINNAME=master
++NX_MSSQL_DB_ADMINPASS=nuxeo
++NX_MSSQL_DB_ADMINUSER=sa
++NX_MSSQL_DB_HOST=squirrel.in.nuxeo.com
++NX_MSSQL_DB_NAME=twang
++NX_MSSQL_DB_PORT=1433
++NX_MYSQL_DB_ADMINNAME=mysql
++NX_MYSQL_DB_ADMINPASS=nuxeo
++NX_MYSQL_DB_ADMINUSER=root
++NX_MYSQL_DB_HOST=saratoga.in.nuxeo.com
++NX_MYSQL_DB_NAME=twang
++NX_MYSQL_DB_PORT=3306
++NX_ORACLE10G_DB_ADMINNAME=nuxeo
++NX_ORACLE10G_DB_ADMINPASS=nuxeo
++NX_ORACLE10G_DB_ADMINUSER=sys
++NX_ORACLE10G_DB_HOST=blackrock.in.nuxeo.com
++NX_ORACLE10G_DB_NAME=nuxeo
++NX_ORACLE10G_DB_PORT=1521
++NX_ORACLE11G_DB_ADMINNAME=nuxeo
++NX_ORACLE11G_DB_ADMINPASS=nuxeo
++NX_ORACLE11G_DB_ADMINUSER=sys
++NX_ORACLE11G_DB_HOST=obsidian.in.nuxeo.com
++NX_ORACLE11G_DB_NAME=nuxeo
++NX_ORACLE11G_DB_PORT=1521
++NX_PGSQL_DB_ADMINNAME=template1
++NX_PGSQL_DB_ADMINPASS=nuxeo
++NX_PGSQL_DB_ADMINUSER=nxadmin
++NX_PGSQL_DB_HOST=saratoga.in.nuxeo.com
++NX_PGSQL_DB_NAME=twang
++NX_PGSQL_DB_PORT=5432
+diff -u -N -r $installDir/jenkins.secret swarm-client/jenkins.secret
 --- swarm-client/jenkins.secret	1970-01-01 01:00:00.000000000 +0100
 +++ swarm-client/jenkins.secret	2018-06-29 14:26:21.000000000 +0200
 @@ -0,0 +1 @@
@@ -25,9 +62,11 @@ diff -u -N -r $installDir/jenkins.secret swarm-client/jenkins.secret
 diff -u -N -r $installDir/launcher.sh swarm-client/launcher.sh
 --- swarm-client/launcher.sh	1970-01-01 01:00:00.000000000 +0100
 +++ swarm-client/launcher.sh	2018-06-29 14:26:21.000000000 +0200
-@@ -0,0 +1,4 @@
+@@ -0,0 +1,6 @@
 +#!/bin/bash
-+
++ set -a
++ source $installDir/swarm.env
++ set +a
 +source $installDir/swarm.opts
 +exec java -Djava.util.logging.config.file=$installDir/logging.properties -jar $installDir/swarm-client.jar \$opts
 diff -u -N -r $installDir/logging.properties swarm-client/logging.properties
