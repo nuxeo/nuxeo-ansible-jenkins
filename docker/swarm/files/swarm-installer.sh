@@ -21,7 +21,7 @@ diff -u -N -r $installDir/jenkins.secret swarm-client/jenkins.secret
 --- swarm-client/jenkins.secret	1970-01-01 01:00:00.000000000 +0100
 +++ swarm-client/jenkins.secret	2018-06-29 14:26:21.000000000 +0200
 @@ -0,0 +1 @@
-+${1:-You should provide a secret as first argument}
++${JENKINS_API_SECRET:-You should provide a secret}
 diff -u -N -r $installDir/launcher.sh swarm-client/launcher.sh
 --- swarm-client/launcher.sh	1970-01-01 01:00:00.000000000 +0100
 +++ swarm-client/launcher.sh	2018-06-29 14:26:21.000000000 +0200
