@@ -1,25 +1,28 @@
-installDir=$HOME/swarm-client
+installDir=$(realpath ${1:-$HOME})
 
-patch -p0 <<EOF
-diff -u -N -r swarm-client/swarm.labels $installDir/swarm.labels
---- swarm-client/swarm.labels	1970-01-01 01:00:00.000000000 +0100
-+++ swarm-client/swarm.labels	2018-06-29 14:26:21.000000000 +0200
+cat <<EOF | patch -d/ -p0
+diff -u -N -r swarm.labels $installDir/swarm-client/conf/swarm.labels
+--- $installDir/swarm-client/conf/swarm.labels	1970-01-01 01:00:00.000000000 +0100
++++ $installDir/swarm-client/conf/swarm.labels	2018-06-29 14:26:21.000000000 +0200
 @@ -0,0 +1,1 @@
-+OSXSLAVE
++swarm
 \ No newline at end of file
-diff -u -N -r swarm-client/swarm.opts $installDir/swarm.opts
---- swarm-client/swarm.opts	1970-01-01 01:00:00.000000000 +0100
-+++ swarm-client/swarm.opts	2018-06-29 14:26:21.000000000 +0200
-@@ -0,0 +1,6 @@
-+opts="-master https://qa.nuxeo.org/jenkins"
-+opts="\$opts -name $(hostname)"
-+opts="\$opts -deleteExistingClients  -disableClientsUniqueId -retry 3 --showHostName -pidFile $installDir/instance.pid"
-+opts="\$opts -username jenkins -passwordFile $installDir/jenkins.secret"
-+opts="\$opts -labelsFile $installDir/swarm.labels"
-+opts="\$opts --toolLocation java-7-sun=/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home/ --toolLocation java-8-oracle=/Library/Java/JavaVirtualMachines/jdk1.8.0_40.jdk/Contents/Home/"
-diff -u -N -r $installDir/jenkins.secret swarm-client/jenkins.secret
---- swarm-client/swarm.env	1970-01-01 01:00:00.000000000 +0100
-+++ swarm-client/swarm.env      2018-06-29 16:41:20.661429829 +0200
+diff -u -N -r swarm.opts $installDir/conf/swarm-client/swarm.opts
+--- $installDir/swarm-client/conf/swarm.opts	1970-01-01 01:00:00.000000000 +0100
++++ $installDir/swarm-client/conf/swarm.opts	2018-06-29 14:26:21.000000000 +0200
+@@ -0,0 +1,9 @@
++[ "\$JENKINS_API_TOKEN" != "" ] && echo \$JENKINS_API_TOKEN > $installDir/swarm-client/conf/jenkins.secret
++opts="-master \${JENKINS_MASTER:-https://qa.nuxeo.org/jenkins}"
++opts="\$opts -fsroot /opt/jenkins"
++opts="\$opts -executors 1"
++opts="\$opts -name \${JENKINS_NAME:-\$(hostname)}"
++opts="\$opts -deleteExistingClients  -disableClientsUniqueId -retry 3 --showHostName -pidFile $installDir/swarm-client/instance.pid"
++opts="\$opts -username \${JENKINS_USERNAME:-jenkins} -passwordFile $installDir/swarm-client/conf/jenkins.secret"
++opts="\$opts -labelsFile $installDir/swarm-client/conf/swarm.labels"
++#opts="\$opts --toolLocation java-7-sun=/usr/lib/jvm/java-7/ --toolLocation java-8-oracle=/usr/lib/jvm/java-8/"
+diff -u -N -r $installDir/swarm-client/conf/swarm.env swarm.env
+--- $installDir/swarm-client/conf/swarm.env	1970-01-01 01:00:00.000000000 +0100
++++ $installDir/swarm-client/conf/swarm.env      2018-06-29 16:41:20.661429829 +0200
 @@ -0,0 +1,33 @@
 +DISPLAY=:1
 +NX_DB_PASS=nuxeo
@@ -27,51 +30,51 @@ diff -u -N -r $installDir/jenkins.secret swarm-client/jenkins.secret
 +NX_MSSQL_DB_ADMINNAME=master
 +NX_MSSQL_DB_ADMINPASS=nuxeo
 +NX_MSSQL_DB_ADMINUSER=sa
-+NX_MSSQL_DB_HOST=squirrel.in.nuxeo.com
-+NX_MSSQL_DB_NAME=twang
++NX_MSSQL_DB_HOST=squirrel
++NX_MSSQL_DB_NAME=\($hostname)
 +NX_MSSQL_DB_PORT=1433
 +NX_MYSQL_DB_ADMINNAME=mysql
 +NX_MYSQL_DB_ADMINPASS=nuxeo
 +NX_MYSQL_DB_ADMINUSER=root
-+NX_MYSQL_DB_HOST=saratoga.in.nuxeo.com
-+NX_MYSQL_DB_NAME=twang
++NX_MYSQL_DB_HOST=saratoga
++NX_MYSQL_DB_NAME=\$(hostname)
 +NX_MYSQL_DB_PORT=3306
 +NX_ORACLE10G_DB_ADMINNAME=nuxeo
 +NX_ORACLE10G_DB_ADMINPASS=nuxeo
 +NX_ORACLE10G_DB_ADMINUSER=sys
-+NX_ORACLE10G_DB_HOST=blackrock.in.nuxeo.com
++NX_ORACLE10G_DB_HOST=blackrock
 +NX_ORACLE10G_DB_NAME=nuxeo
 +NX_ORACLE10G_DB_PORT=1521
 +NX_ORACLE11G_DB_ADMINNAME=nuxeo
 +NX_ORACLE11G_DB_ADMINPASS=nuxeo
 +NX_ORACLE11G_DB_ADMINUSER=sys
-+NX_ORACLE11G_DB_HOST=obsidian.in.nuxeo.com
++NX_ORACLE11G_DB_HOST=obsidian
 +NX_ORACLE11G_DB_NAME=nuxeo
 +NX_ORACLE11G_DB_PORT=1521
 +NX_PGSQL_DB_ADMINNAME=template1
 +NX_PGSQL_DB_ADMINPASS=nuxeo
 +NX_PGSQL_DB_ADMINUSER=nxadmin
-+NX_PGSQL_DB_HOST=saratoga.in.nuxeo.com
-+NX_PGSQL_DB_NAME=twang
++NX_PGSQL_DB_HOST=saratoga
++NX_PGSQL_DB_NAME=\$(hostname)
 +NX_PGSQL_DB_PORT=5432
-diff -u -N -r $installDir/jenkins.secret swarm-client/jenkins.secret
---- swarm-client/jenkins.secret	1970-01-01 01:00:00.000000000 +0100
-+++ swarm-client/jenkins.secret	2018-06-29 14:26:21.000000000 +0200
+diff -u -N -r $installDir/swarm-client/conf/jenkins.secret jenkins.secret
+--- $installDir/swarm-client/conf/jenkins.secret	1970-01-01 01:00:00.000000000 +0100
++++ $installDir/swarm-client/conf/jenkins.secret	2018-06-29 14:26:21.000000000 +0200
 @@ -0,0 +1 @@
 +${JENKINS_API_SECRET:-You should provide a secret}
-diff -u -N -r $installDir/launcher.sh swarm-client/launcher.sh
---- swarm-client/launcher.sh	1970-01-01 01:00:00.000000000 +0100
-+++ swarm-client/launcher.sh	2018-06-29 14:26:21.000000000 +0200
+diff -u -N -r $installDir/swarm-client/launcher.sh launcher.sh
+--- $installDir/swarm-client/launcher.sh	1970-01-01 01:00:00.000000000 +0100
++++ $installDir/swarm-client/launcher.sh	2018-06-29 14:26:21.000000000 +0200
 @@ -0,0 +1,6 @@
-+#!/bin/bash
-+ set -a
-+ source $installDir/swarm.env
-+ set +a
-+source $installDir/swarm.opts
-+exec java -Djava.util.logging.config.file=$installDir/logging.properties -jar $installDir/swarm-client.jar \$opts
-diff -u -N -r $installDir/logging.properties swarm-client/logging.properties
---- swarm-client/logging.properties	1970-01-01 01:00:00.000000000 +0100
-+++ swarm-client/logging.properties	2018-06-29 15:38:36.000000000 +0200
++#!/bin/bash -x
++set -a
++source $installDir/swarm-client/conf/swarm.env
++set +a
++source $installDir/swarm-client/conf/swarm.opts
++exec java -Djava.util.logging.config.file=$installDir/swarm-client/conf/logging.properties -jar $installDir/swarm-client/swarm-client.jar \$opts
+diff -u -N -r $installDir/swarm-client/conf/logging.properties logging.properties
+--- $installDir/swarm-client/conf/logging.properties	1970-01-01 01:00:00.000000000 +0100
++++ $installDir/swarm-client/conf/logging.properties	2018-06-29 15:38:36.000000000 +0200
 @@ -0,0 +1,59 @@
 +############################################################
 +#  	Default Logging Configuration File
@@ -115,7 +118,7 @@ diff -u -N -r $installDir/logging.properties swarm-client/logging.properties
 +############################################################
 +
 +# default file output is in user's home directory.
-+java.util.logging.FileHandler.pattern = $installDir/swarm-%u.log
++java.util.logging.FileHandler.pattern = $installDir/swarm-client/swarm-%u.log
 +java.util.logging.FileHandler.limit = 1000000
 +java.util.logging.FileHandler.count = 10
 +java.util.logging.FileHandler.formatter = java.util.logging.SimpleFormatter
@@ -134,8 +137,7 @@ diff -u -N -r $installDir/logging.properties swarm-client/logging.properties
 +# messages:
 EOF
 
-wget -q https://maven.nuxeo.org/nexus/service/local/repositories/vendor-releases/content/org/jenkins-ci/plugins/swarm-client/3.12/swarm-client-3.12-remoting-2-59-2.jar -O $installDir/swarm-client.jar
-chmod +x $installDir/launcher.sh
-
-echo "Launch swarm @ reboot by editing your crontab with the following line"
-echo "@reboot /bin/bash -l -c $installDir/launcher.sh"
+set -x
+wget -q https://maven.nuxeo.org/nexus/service/local/repositories/vendor-releases/content/org/jenkins-ci/plugins/swarm-client/3.12/swarm-client-3.12-remoting-2-59-2.jar -O $installDir/swarm-client/swarm-client.jar
+chmod +x $installDir/swarm-client/launcher.sh
+set +x

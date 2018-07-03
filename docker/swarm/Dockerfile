@@ -20,8 +20,9 @@
 
 
 FROM dockerpriv.nuxeo.com:443/nuxeo/jenkins-slave
-RUN wget https://maven.nuxeo.org/nexus/service/local/repositories/vendor-releases/content/org/jenkins-ci/plugins/swarm-client/3.12/swarm-client-3.12-remoting-2-59-2.jar -O /opt/jenkins/bin/swarm-client.jar
-COPY ${SWARM:-.}/files/swarm.sh /opt/jenkins/bin/swarm-client.sh
-RUN chmod +x /opt/jenkins/bin/swarm-client.sh
-CMD [ "/sbin/my_init", "--", "/opt/jenkins/bin/swarm-client.sh" ]
-
+RUN usermod -a -G ssl-cert jenkins 
+COPY ${SWARM:-.}/files/swarm-installer.sh /tmp
+RUN sudo -u jenkins /tmp/swarm-installer.sh /opt/jenkins
+COPY ${SWARM:-.}/files/swarm-launcher.sh /etc/my_init.d/30-swarm-launcher.sh
+# fix postgres
+RUN rm -fr /etc/ssl/private && mkdir /etc/ssl/private && chmod 710 /etc/ssl/private && chown root:ssl-cert /etc/ssl/private && DEBIAN_FRONTEND="noninteractive" dpkg-reconfigure ssl-cert
