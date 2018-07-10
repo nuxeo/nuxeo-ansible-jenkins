@@ -100,7 +100,7 @@
     PATH: /opt/build/tools/node-v6.9.2-linux-x64/bin:{{ansible_env.PATH}}
   tags: nodejs
 
-- name: Check for Node LTS
+- name: Check for Node 8.11 LTS
   stat: path=/opt/build/tools/node-v8.11.3-linux-x64
   register: nodelts_installed
 - name: Get Node 8.11 package
