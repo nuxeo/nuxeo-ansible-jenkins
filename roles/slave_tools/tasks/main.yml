@@ -191,6 +191,8 @@
   tags: java,java8
 - include: java9.yml
   tags: java, java9
+- include: java11.yml
+  tags: java, java11
 
 - name: Set default to OpenJDK 8
   alternatives: name=java path=/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
