@@ -13,8 +13,5 @@
 - name: Create JDK 9 symlink
   file: src=/usr/lib/jvm/jdk-9.0.1 path=/usr/lib/jvm/java-9 state=link force=yes
   when: not java9_installed.stat.exists
-#- name: Install JDK 9 alternative
-#  command: update-alternatives --install /usr/bin/java java /usr/lib/jvm/java-9/jre/bin/java 1091
-#  when: not java9_installed.stat.exists
 - file: path=/tmp/jdk-9-linux-x64.tgz state=absent
 
