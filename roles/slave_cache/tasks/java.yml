@@ -39,3 +39,13 @@
     creates: cache/openjdk-9.0.1_linux-x64_bin.tar.gz
   when: openjdk9.url is not defined
 
+- name: OpenJDK 11
+  s3: bucket={{s3_bucket}} region={{s3_region}} object=/{{s3_tools_path}}/openjdk-11-ea+23_linux-x64_bin.tar.gz mode=geturl
+  changed_when: false
+  failed_when: false
+  register: openjdk11
+- command: "wget -q -Ocache/openjdk-11-ea+23_linux-x64_bin.tar.gz --no-check-certificate 'https://download.java.net/java/early_access/jdk11/23/GPL/openjdk-11-ea+23_linux-x64_bin.tar.gz'"
+  args:
+    creates: cache/openjdk-11-ea+23_linux-x64_bin.tar.gz
+  when: openjdk11.url is not defined
+
