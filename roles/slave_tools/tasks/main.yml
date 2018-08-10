@@ -118,6 +118,7 @@
   - gdebi-core
   - shunit2
   - libxml2-utils
+  - libkrb5-dev
   tags: apt
 - apt: state=latest name=tcpwatch-httpproxy install_recommends=no
 - pip: name=logchart
