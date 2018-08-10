@@ -99,6 +99,7 @@
   - xmlstarlet
   - shunit2
   - libxml2-utils
+  - libkrb5-dev
 - apt: state=latest name=tcpwatch-httpproxy install_recommends=no
 - pip: name=logchart
 - pip: name=boto
