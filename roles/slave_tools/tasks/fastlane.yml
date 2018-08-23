@@ -2,7 +2,9 @@
 # file: roles/slave_tools/tasks/fastlane.yml
 
 - name: Install the latest version of fastlane
+  become: true
+  become_user: jenkins
   gem:
     name: fastlane
     state: latest
-    user_install: no
+    user_install: yes
