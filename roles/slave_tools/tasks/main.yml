@@ -342,6 +342,11 @@
   file: path=/etc/service/namettl/down state=touch
   when: myinitd.stat.exists
 
+# Profile configuration
+- name: Install rubygems setup file
+  copy: src=setup_rubygems.sh dest=/etc/profile.d/setup_rubygems.sh
+        mode=0755 owner=root group=root
+
 - include: postgresql.yml
 
 - include: git-lfs.yml
