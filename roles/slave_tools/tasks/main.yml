@@ -333,6 +333,10 @@
   copy: src=20_update_slave_jar.sh dest=/etc/my_init.d/20_update_slave_jar.sh
         mode=0755 owner=root group=root
   when: myinitd.stat.exists
+- name: Install rubygems setup file
+  copy: src=30_setup_rubygems.sh dest=/etc/my_init.d/30_setup_rubygems.sh
+        mode=0755 owner=root group=root
+  when: myinitd.stat.exists
 - file: path=/etc/service/namettl state=directory
   when: myinitd.stat.exists
 - name: Add name keepalive script for multidb env
@@ -341,11 +345,6 @@
 - name: Disable name keepalive script by default
   file: path=/etc/service/namettl/down state=touch
   when: myinitd.stat.exists
-
-# Profile configuration
-- name: Install rubygems setup file
-  copy: src=setup_rubygems.sh dest=/etc/profile.d/setup_rubygems.sh
-        mode=0755 owner=root group=root
 
 - include: postgresql.yml
 
