@@ -14,3 +14,10 @@ fi
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
+
+# export ~/.ssh/environment variable if the file exists
+if [ -f ~/.ssh/environment ]; then
+    set -a
+    . ~/.ssh/environment
+    set +a
+fi
