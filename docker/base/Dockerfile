@@ -81,6 +81,7 @@ RUN chmod 0600 /home/ubuntu/.ssh/authorized_keys
 RUN chmod 0700 /home/ubuntu/.ssh
 
 RUN echo "UsePAM yes" >> /etc/ssh/sshd_config
+RUN echo "PermitUserEnvironment yes" >> /etc/ssh/sshd_config
 RUN rm -f /etc/service/sshd/down
 
 EXPOSE 22
