@@ -1,0 +1,9 @@
+---
+- name: Add ffmpeg ppa
+  apt_repository: repo='ppa:jonathonf/ffmpeg-4'
+- name: Update apt cache
+  apt: update_cache=yes
+- name: Install ffmpeg
+  apt: 
+    name: ffmpeg=4.1.3 
+    state: present
