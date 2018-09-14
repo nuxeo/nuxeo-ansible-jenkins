@@ -106,10 +106,6 @@
   - libncurses5-dev
   - libncursesw5-dev
   - xz-utils
-  # Drive requirements (for PyQt4 compilation)
-  - qt4-qmake
-  - libqt4-dev
-  - libqtwebkit-dev
   # Useful to have
   - python-lxml
   - python-requests
