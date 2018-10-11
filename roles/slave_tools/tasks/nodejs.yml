@@ -142,9 +142,9 @@
 - name: Remove old global npm
   file: path=/usr/local/bin/npm state=absent
 
-- alternatives: name=node link=/usr/bin/node path=/opt/build/tools/node-v6.9.2-linux-x64/bin/node
-- alternatives: name=npm link=/usr/bin/npm path=/opt/build/tools/node-v6.9.2-linux-x64/bin/npm
-- alternatives: name=yo link=/usr/bin/yo path=/opt/build/tools/node-v6.9.2-linux-x64/bin/yo
-- alternatives: name=grunt link=/usr/bin/grunt path=/opt/build/tools/node-v6.9.2-linux-x64/bin/grunt
-- alternatives: name=gulp link=/usr/bin/gulp path=/opt/build/tools/node-v6.9.2-linux-x64/bin/gulp
-- alternatives: name=bower link=/usr/bin/bower path=/opt/build/tools/node-v6.9.2-linux-x64/bin/bower
+- alternatives: name=node link=/usr/bin/node path=/opt/build/tools/node-v8.11.3-linux-x64/bin/node
+- alternatives: name=npm link=/usr/bin/npm path=/opt/build/tools/node-v8.11.3-linux-x64/bin/npm
+- alternatives: name=yo link=/usr/bin/yo path=/opt/build/tools/node-v8.11.3-linux-x64/bin/yo
+- alternatives: name=grunt link=/usr/bin/grunt path=/opt/build/tools/node-v8.11.3-linux-x64/bin/grunt
+- alternatives: name=gulp link=/usr/bin/gulp path=/opt/build/tools/node-v8.11.3-linux-x64/bin/gulp
+- alternatives: name=bower link=/usr/bin/bower path=/opt/build/tools/node-v8.11.3-linux-x64/bin/bower
