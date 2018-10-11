@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-mkdir -p /var/run/postgresql/9.5-main.pg_stat_tmp
-chown postgres:postgres /var/run/postgresql/9.5-main.pg_stat_tmp
-exec /sbin/setuser postgres /usr/lib/postgresql/9.5/bin/postgres -D /var/lib/postgresql/9.5/main -c config_file=/etc/postgresql/9.5/main/postgresql.conf
+mkdir -p /var/run/postgresql/10-main.pg_stat_tmp
+chown postgres:postgres /var/run/postgresql/10-main.pg_stat_tmp
+exec /sbin/setuser postgres /usr/lib/postgresql/10/bin/postgres -D /var/lib/postgresql/10/main -c config_file=/etc/postgresql/10/main/postgresql.conf
 

@@ -7,4 +7,13 @@
   - redis-server
   - redis-tools
   tags: redis
+- name: Do not listen on IPv6
+  lineinfile:
+    dest: /etc/redis/redis.conf
+    regexp: '::1'
+    state: absent
+- name: Listen on IPv4 loopback
+  lineinfile:
+    dest: /etc/redis/redis.conf
+    line: 'bind 127.0.0.1'
 
