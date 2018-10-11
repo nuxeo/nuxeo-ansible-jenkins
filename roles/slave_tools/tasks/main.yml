@@ -76,8 +76,8 @@
   - libc6-i386
   - g++-multilib
   - libssl-dev
-  - ruby2.3
-  - ruby2.3-dev
+  - ruby2.5
+  - ruby2.5-dev
   - aspell
   - jq
   - net-tools
@@ -94,8 +94,7 @@
   - python-docutils
   - gnuplot
   - python-reportlab
-  - python-pypdf
-  - pgfouine
+  - python-pypdf2
   # Drive requirements (for Python compilation)
   - build-essential
   - zlib1g-dev
@@ -123,7 +122,6 @@
 - pip: name=boto
 - pip: name=docker-py
 - pip: name=awscli
-- shell: easy_install -f http://funkload.nuxeo.org/snapshots/ -U funkload
 - alternatives: name=editor path=/usr/bin/vim.basic
 # Xvfb, x11vnc, fluxbox
 - copy: src=xvfb dest=/etc/init.d/xvfb
@@ -157,14 +155,14 @@
   changed_when: false
 - name: Get ccextractor package
   s3: bucket={{s3_bucket}} region={{s3_region}}
-      object=/{{s3_tools_path}}/ccextractor-nuxeo_0.0.1-20161004-01-1_amd64.deb
-      dest=/tmp/ccextractor-nuxeo_0.0.1-20161004-01-1_amd64.deb mode=get
+      object=/{{s3_tools_path}}/ccextractor-nuxeo_0.0.1-20181003-01-1_amd64.deb
+      dest=/tmp/ccextractor-nuxeo_0.0.1-20181003-01-1_amd64.deb mode=get
       aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}}
   when: ccxcheck.rc == 1
 - name: Install ccextractor
-  command: gdebi --n /tmp/ccextractor-nuxeo_0.0.1-20161004-01-1_amd64.deb
+  command: gdebi --n /tmp/ccextractor-nuxeo_0.0.1-20181003-01-1_amd64.deb
   when: ccxcheck.rc == 1
-- file: path=/tmp/ccextractor-nuxeo_0.0.1-20161004-01-1_amd64.deb state=absent
+- file: path=/tmp/ccextractor-nuxeo_0.0.1-20181003-01-1_amd64.deb state=absent
 
 # Firefox
 # Can't use APT which pulls unfixed FF version
@@ -268,6 +266,15 @@
 
 # Redis
 - include: redis.yml
+
+# Azure CLI
+- name: Install Azure CLI
+  npm: name=azure-cli version=0.10.7 global=yes
+  register: azure_install
+  tags: azure-cli
+- name: Add azure symlink
+  file: path=/usr/local/bin/azure src=/opt/build/tools/node-v6.9.2-linux-x64/bin/azure state=link
+  tags: azure-cli
 
 # NSIS
 - include: nsis.yml
