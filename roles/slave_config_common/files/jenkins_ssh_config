@@ -8,6 +8,12 @@ Host gimli
 Host joyeux
     HostName qa-ovh02.nuxeo.com
     Port 2301
+Host itslave01
+    HostName qa-ovh01.nuxeo.com
+    Port 2301
+Host itslave03
+    HostName qa-ovh03.nuxeo.com
+    Port 2301
 Host www
     HostName 10.10.0.63
     ProxyCommand ssh -W %h:%p ubuntu@52.2.219.159 2> /dev/null
