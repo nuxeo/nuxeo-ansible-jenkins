@@ -34,3 +34,12 @@
 - get_url: url=https://nodejs.org/dist/v8.11.3/node-v8.11.3-linux-x64.tar.xz
            dest=cache/node-v8.11.3-linux-x64.tar.xz
   when: nodejs811.url is not defined
+
+- name: NodeJS 10.12.0
+  s3: bucket={{s3_bucket}} region={{s3_region}} object=/{{s3_tools_path}}/node-v10.12.0-linux-x64.tar.xz mode=geturl
+  changed_when: false
+  failed_when: false
+  register: nodejs1012
+- get_url: url=https://nodejs.org/dist/v10.12.0/node-v10.12.0-linux-x64.tar.xz
+           dest=cache/node-v10.12.0-linux-x64.tar.xz
+  when: nodejs1012.url is not defined
