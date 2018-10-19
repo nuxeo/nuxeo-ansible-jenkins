@@ -117,7 +117,7 @@
   - libkrb5-dev
   tags: apt
 - name: Fix ImageMagick policy
-  replace: dest=/etc/ImageMagick-6/policy.xml regexp='policy domain="coder" rights="none" pattern="PDF"' replace='policy domain="coder" rights="read|write" pattern="PDF"'
+  replace: dest=/etc/ImageMagick-6/policy.xml regexp='rights="none" pattern="(PS|EPS|PDF|XPS)"' replace='rights="read|write" pattern="\1"'
 - apt: state=latest name=tcpwatch-httpproxy install_recommends=no
 - pip: name=logchart
 - pip: name=boto
