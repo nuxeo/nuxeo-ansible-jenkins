@@ -100,6 +100,8 @@
   - shunit2
   - libxml2-utils
   - libkrb5-dev
+- name: Fix ImageMagick policy
+  replace: dest=/etc/ImageMagick/policy.xml regexp='rights="none" pattern="(PS|EPS|PDF|XPS)"' replace='rights="read|write" pattern="\1"'
 - apt: state=latest name=tcpwatch-httpproxy install_recommends=no
 - pip: name=logchart
 - pip: name=boto
