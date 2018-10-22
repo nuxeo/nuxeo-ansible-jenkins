@@ -5,5 +5,5 @@ docker
 slaves
 
 [slaves]
-slavepriv ansible_ssh_port="{{ ssh_port | default('2232') }}" ansible_ssh_host=127.0.0.1
+slavepriv ansible_ssh_port="{{ ssh_port | default('2224') }}" ansible_ssh_host=127.0.0.1
 
