@@ -67,6 +67,23 @@
   when: not ff58_installed.stat.exists
 - file: path=/tmp/firefox-58.0.tar.bz2 state=absent
 
+- name: Check for Firefox 63
+  stat: path=/opt/build/tools/firefox-63
+  register: ff63_installed
+- name: Get Firefox 63 package
+  s3: bucket={{s3_bucket}} region={{s3_region}}
+      object=/{{s3_tools_path}}/firefox-63.0.tar.bz2 dest=/tmp/firefox-63.0.tar.bz2 mode=get
+      aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}}
+  when: not ff63_installed.stat.exists
+- name: Install Firefox 63
+  unarchive: src=/tmp/firefox-63.0.tar.bz2 dest=/opt/build/tools copy=no
+  when: not ff63_installed.stat.exists
+- name: Fix Firefox 63 directory
+  command: creates=/opt/build/tools/firefox-63
+           mv /opt/build/tools/firefox /opt/build/tools/firefox-63
+  when: not ff63_installed.stat.exists
+- file: path=/tmp/firefox-63.0.tar.bz2 state=absent
+
 - name: Check for GeckoDriver 0.19.1
   stat: path=/opt/build/tools/geckodriver-0.19.1
   register: geckodriver0191_installed
