@@ -1,4 +1,4 @@
-docker/files/id_rsa.pub
+docker/base/files/id_rsa.pub
 cache
 wincache
 *.retry
