@@ -35,7 +35,16 @@
            dest=cache/firefox-58.0.tar.bz2
   when: firefox58.url is not defined
 
-- name: GeckoDriver (WebDriver for Firefox since Selenium 3)
+- name: Firefox 63
+  s3: bucket={{s3_bucket}} region={{s3_region}} object=/{{s3_tools_path}}/firefox-63.0.tar.bz2 mode=geturl
+  changed_when: false
+  failed_when: false
+  register: firefox63
+- get_url: url=https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/63.0/linux-x86_64/en-US/firefox-63.0.tar.bz2
+           dest=cache/firefox-63.0.tar.bz2
+  when: firefox63.url is not defined
+
+- name: GeckoDriver 0.19.1
   s3: bucket={{s3_bucket}} region={{s3_region}} object=/{{s3_tools_path}}/geckodriver-v0.19.1-linux64.tar.gz mode=geturl
   changed_when: false
   failed_when: false
@@ -43,3 +52,12 @@
 - get_url: url=https://github.com/mozilla/geckodriver/releases/download/v0.19.1/geckodriver-v0.19.1-linux64.tar.gz
            dest=cache/geckodriver-v0.19.1-linux64.tar.gz
   when: geckodriver0191.url is not defined
+
+- name: GeckoDriver 0.23.0
+  s3: bucket={{s3_bucket}} region={{s3_region}} object=/{{s3_tools_path}}/geckodriver-v0.23.0-linux64.tar.gz mode=geturl
+  changed_when: false
+  failed_when: false
+  register: geckodriver0230
+- get_url: url=https://github.com/mozilla/geckodriver/releases/download/v0.23.0/geckodriver-v0.23.0-linux64.tar.gz
+           dest=cache/geckodriver-v0.23.0-linux64.tar.gz
+  when: geckodriver0230.url is not defined
