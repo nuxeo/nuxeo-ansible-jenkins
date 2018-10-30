@@ -118,19 +118,6 @@
       object=/{{s3_config_path}}/googleplay.json dest=/opt/build/hudson/googleplay.json mode=get
       aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}} overwrite=different
 
-- name: Disable Azure data collection
-  shell: azure telemetry --disable
-  become_user: jenkins
-  when: azure_install.changed
-- name: Configure Azure CLI for ASM
-  shell: azure config mode asm
-  become_user: jenkins
-  when: azure_install.changed
-- name: Setup Azure CLI
-  shell: azure account import /opt/build/keystores/azure.nuxeo.com.publishsettings
-  become_user: jenkins
-  when: azure_install.changed
-
 - name: Add jenkins to docker group
   user: name=jenkins groups=docker append=yes
 
