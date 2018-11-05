@@ -40,7 +40,7 @@ RUN apt-get -q -y install locales unzip sudo
 RUN locale-gen en_US.UTF-8
 RUN dpkg-reconfigure locales
 RUN update-locale LANG=en_US.UTF-8
-RUN apt-get install -q -y postgresql libpq-dev python-psycopg2 libreoffice imagemagick poppler-utils ffmpeg2theora ufraw libwpd-tools git redis-server redis-tools rsync xvfb x11vnc fluxbox ttf-mscorefonts-installer
+RUN apt-get install -q -y postgresql libpq-dev python-psycopg2 libreoffice imagemagick poppler-utils ffmpeg2theora ufraw libwpd-tools git redis-server redis-tools rsync xvfb x11vnc fluxbox ttf-mscorefonts-installer iproute2
 
 # Updating fonts
 RUN fc-cache -f -v
