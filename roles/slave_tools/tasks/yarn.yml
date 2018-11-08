@@ -10,5 +10,5 @@
   apt: update_cache=yes
   when: yarn_apt_rc.stat.exists == false
 - name: Install yarn
-  apt: pkg=yarn state=latest
+  apt: pkg=yarn state=latest install_recommends=no
   when: yarn_apt_rc.stat.exists == false
