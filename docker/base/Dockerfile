@@ -27,8 +27,9 @@
 FROM       phusion/baseimage:0.11
 MAINTAINER Nuxeo Packagers <packagers@nuxeo.com>
 
-RUN echo "deb http://ubuntu.mirrors.ovh.net/ftp.ubuntu.com/ubuntu/ bionic main restricted universe multiverse" > /etc/apt/sources.list
-RUN echo "deb http://ubuntu.mirrors.ovh.net/ftp.ubuntu.com/ubuntu/ bionic-updates main restricted universe multiverse" >> /etc/apt/sources.list
+RUN echo "deb http://eu-west-1.ec2.archive.ubuntu.com/ubuntu/ bionic main restricted universe multiverse" > /etc/apt/sources.list
+RUN echo "deb http://eu-west-1.ec2.archive.ubuntu.com/ubuntu/ bionic-updates main restricted universe multiverse" >> /etc/apt/sources.list
+RUN echo "deb http://eu-west-1.ec2.archive.ubuntu.com/ubuntu/ bionic-backports main restricted universe multiverse" >> /etc/apt/sources.list
 RUN echo "deb http://security.ubuntu.com/ubuntu bionic-security main restricted universe multiverse" >> /etc/apt/sources.list
 
 RUN echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections
