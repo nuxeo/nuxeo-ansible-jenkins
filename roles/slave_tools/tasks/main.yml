@@ -274,6 +274,14 @@
   npm: name=azure-cli version=0.10.7 global=yes
   register: azure_install
   tags: azure-cli
+- name: Check for azure binary
+  stat: path=/usr/local/bin/azure
+  register: azureinbin
+  tags: azure-cli
+- name: Add azure symlink
+  file: path=/usr/local/bin/azure src=/opt/build/tools/node-v10.13.0-linux-x64/bin/azure state=link
+  when: not azureinbin.stat.exists
+  tags: azure-cli
 
 # NSIS
 - include: nsis.yml
