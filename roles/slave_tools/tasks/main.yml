@@ -120,7 +120,7 @@
 - pip: name=boto
 - pip: name=docker-py
 - pip: name=awscli
-- pip: name=python-requests
+- pip: name=requests
 - alternatives: name=editor path=/usr/bin/vim.basic
 # Xvfb, x11vnc, fluxbox
 - copy: src=xvfb dest=/etc/init.d/xvfb
