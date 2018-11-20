@@ -1,4 +1,16 @@
 ---
+- hosts: localhost
+  gather_facts: no
+  become: no
+  tasks:
+  - name: Wait for SSH
+    wait_for:
+      port: "{{ ssh_port | default('2225') }}"
+      host: 127.0.0.1
+      connect_timeout: 30
+      delay: 5
+      timeout: 30
+
 - hosts: all
   gather_facts: no
   user: ubuntu
