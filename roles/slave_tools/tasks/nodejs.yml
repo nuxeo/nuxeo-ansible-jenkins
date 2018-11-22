@@ -26,8 +26,6 @@
   tags: nodejs
 - name: Install Node4 dependencies
   npm: name={{item.name}} version={{item.version}} global=yes
-- name: Install Node4 dependencies
-  npm: name={{item.name}} version={{item.version}} global=yes
   with_items:
   - name: yo
     version: 1.4.6
