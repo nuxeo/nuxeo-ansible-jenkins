@@ -19,6 +19,13 @@
   tags: nodejs
   environment:
     PATH: /opt/build/tools/node-v4.5.0-linux-x64/bin:{{ansible_env.PATH}}
+# Bypass unstable unicode.org
+- file: path=/usr/share/unicode-data state=directory
+  tags: nodejs
+- copy: src=UnicodeData.txt dest=/usr/share/unicode-data/UnicodeData.txt mode=0644 owner=root group=root
+  tags: nodejs
+- name: Install Node4 dependencies
+  npm: name={{item.name}} version={{item.version}} global=yes
 - name: Install Node4 dependencies
   npm: name={{item.name}} version={{item.version}} global=yes
   with_items:
