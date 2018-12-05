@@ -1,0 +1,7 @@
+---
+# file: roles/slave_tools/tasks/rdoc.yml
+
+- name: Install the latest version of RDoc
+  gem:
+    name: rdoc
+    state: latest
