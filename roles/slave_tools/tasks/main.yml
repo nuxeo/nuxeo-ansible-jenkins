@@ -193,8 +193,11 @@
 - include: java9.yml
   tags: java, java9
 
-- name: Set default to OpenJDK 8
-  alternatives: name=java path=/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+#- name: Set default to OpenJDK 8
+#  alternatives: name=java path=/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+#  tags: java,java8
+- name: Set default to Oracle JDK 8
+  alternatives: name=java path=/usr/lib/jvm/java-8/jre/bin/java
   tags: java,java8
 
 # Maven
