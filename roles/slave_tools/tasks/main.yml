@@ -198,6 +198,7 @@
 # use https://qa.nuxeo.org/jenkins/plugin/ec2/AMI-Scripts/ubuntu-ami-setup.sh once ec2 plugin upgraded
   get_url: url=https://github.com/jenkinsci/ec2-plugin/raw/master/src/main/webapp/AMI-Scripts/ubuntu-init.py
            dest=/usr/bin/userdata mode=0750
+           validate_certs=no
   when: "'docker' not in group_names and 'local' not in group_names"
 - lineinfile: dest=/etc/rc.local backup=true state=present
               regexp='^python /usr/bin/userdata$' line='python /usr/bin/userdata' insertbefore='^exit 0'
@@ -268,6 +269,7 @@
 - name: Docker compose
   get_url: url=https://github.com/docker/compose/releases/download/1.7.1/docker-compose-Linux-x86_64
           dest=/usr/local/bin/docker-compose
+          validate_certs=no
 - file: path=/usr/local/bin/docker-compose mode=0755
 
 # libsass - replace with standard package when upgrading ubuntu
@@ -292,6 +294,7 @@
   file: path=/opt/jenkins/bin state=directory owner=jenkins group=jenkins
 - get_url: url=https://qa.nuxeo.org/jenkins/jnlpJars/slave.jar
            dest=/opt/jenkins/bin/slave.jar
+           validate_certs=no
   become_user: jenkins
 
 # Docker environment
