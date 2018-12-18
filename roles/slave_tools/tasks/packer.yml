@@ -1,0 +1,14 @@
+---
+- name: Check for packer
+  stat: path=/usr/local/bin/packer
+  register: packer_installed
+- name: Get oacker 1.3.3 package
+  s3: bucket={{s3_bucket}} region={{s3_region}}
+      object=/{{s3_tools_path}}/packer_1.3.3_linux_amd64.zip dest=/tmp/packer.zip mode=get
+      aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}}
+  when: not packer_installed.stat.exists
+- name: Install packer 1.3.3
+  unarchive: src=/tmp/packer.zip dest=/usr/local/bin copy=no mode=0755
+  when: not packer_installed.stat.exists
+- file: path=/tmp/packer.zip state=absent
+
