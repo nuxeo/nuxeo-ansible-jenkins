@@ -2,7 +2,7 @@
 - name: Check for packer
   stat: path=/usr/local/bin/packer
   register: packer_installed
-- name: Get oacker 1.3.3 package
+- name: Get packer 1.3.3 package
   s3: bucket={{s3_bucket}} region={{s3_region}}
       object=/{{s3_tools_path}}/packer_1.3.3_linux_amd64.zip dest=/tmp/packer.zip mode=get
       aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}}
