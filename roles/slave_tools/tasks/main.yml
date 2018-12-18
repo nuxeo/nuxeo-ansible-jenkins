@@ -306,6 +306,10 @@
           validate_certs=no
 - file: path=/usr/local/bin/docker-compose mode=0755
 
+# Packer
+- include: packer.yml
+  tags: packer
+
 # libsass - replace with standard package when upgrading ubuntu
 - name: Check for libsass
   command: dpkg-query -W libsass-nuxeo
