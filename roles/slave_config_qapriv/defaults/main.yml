@@ -1,5 +1,5 @@
 ---
 s3_region: eu-west-1
-s3_bucket: nuxeo-jenkins-resources
+s3_bucket: nuxeo-devtools-resources
 s3_config_path: ansible/linux/qa-config/qapriv
 
