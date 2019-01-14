@@ -112,6 +112,10 @@
   - shunit2
   - libxml2-utils
   - libkrb5-dev
+  # Python 3 stuff
+  - python3-dev
+  - python3-pip
+  - python3-venv
   tags: apt
 - name: Fix ImageMagick policy
   replace: dest=/etc/ImageMagick-6/policy.xml regexp='rights="none" pattern="(PS|EPS|PDF|XPS)"' replace='rights="read|write" pattern="\1"'
