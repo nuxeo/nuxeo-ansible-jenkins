@@ -30,6 +30,9 @@ echo "DISPLAY=:1" >>  /etc/environment
 echo "/usr/bin" > /etc/container_environment/SHUNIT2_HOME
 echo "SHUNIT2_HOME=/usr/bin" >>  /etc/environment
 
+echo "-Xmx2g" > /etc/container_environment/JAVA_OPTS
+echo "JAVA_OPTS=-Xmx2g" >> /etc/environment
+
 # Add defined DB variables to environment
 for v in HOST PORT NAME USER PASS ADMINNAME ADMINUSER ADMINPASS; do
     var="NX_DB_${v}"
