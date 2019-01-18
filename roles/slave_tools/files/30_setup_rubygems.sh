@@ -1,12 +1,14 @@
 #!/bin/bash -e
 
-# add user installed gems bin to PATH
-if which ruby >/dev/null && which gem >/dev/null; then
+grep -q GEM_HOME ~jenkins/.profile && exit 0
 
-    sudo -H -u jenkins sh <<"EOF"
+sudo -H -u jenkins sh <<EOS
+set -x
 GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
-echo "GEM_HOME=$GEM_HOME" >>  $HOME/.ssh/environment
-echo "PATH=$GEM_HOME/bin:$PATH" >>  $HOME/.ssh/environment
-EOF
+cat <<EOE >> \$HOME/.profile
+# ruby gem home and path
+GEM_HOME=\$GEM_HOME; export GEM_HOME
+PATH=\\\$GEM_HOME/bin:\\\$PATH; export PATH
+EOE
+EOS
 
-fi
