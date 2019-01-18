@@ -1,8 +1,9 @@
 ---
-- name: Add git-lfs repo key
-  apt_key: url=https://packagecloud.io/gpg.key state=present
-- name: Add git-lfs repo
-  copy: src=git-lfs.list dest=/etc/apt/sources.list.d/git-lfs.list
+- name: Add git-lfs repo 
+  shell: |
+    curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+  args:
+    executable: /bin/bash
 - name: Install git-lfs package
   apt:
     name=git-lfs
