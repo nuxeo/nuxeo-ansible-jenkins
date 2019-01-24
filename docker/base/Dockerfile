@@ -61,7 +61,7 @@ RUN useradd -d /home/ubuntu -m -s /bin/bash ubuntu
 RUN echo "\nubuntu ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # Add jenkins user
-RUN useradd -d /opt/jenkins -m -s /bin/bash jenkins
+RUN useradd -G docker_env -d /opt/jenkins -m -s /bin/bash jenkins
 
 RUN mkdir /etc/service/xvfb
 ADD ${BASE:-.}/files/xvfb /etc/service/xvfb/run
