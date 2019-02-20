@@ -2,6 +2,9 @@
 # file: roles/slave_tools/tasks/rdoc.yml
 
 - name: Install the latest version of RDoc
+  become: true
+  become_user: jenkins
   gem:
     name: rdoc
     state: latest
+    user_install: yes
