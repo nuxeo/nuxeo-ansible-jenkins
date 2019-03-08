@@ -4,14 +4,14 @@
   register: java11_installed
 - name: Get Java11 package
   s3: bucket={{s3_bucket}} region={{s3_region}}
-      object=/{{s3_tools_path}}/openjdk-11-ea+23_linux-x64_bin.tar.gz dest=/tmp/openjdk-11-ea+23_linux-x64_bin.tar.gz mode=get
+      object=/{{s3_tools_path}}/openjdk-11.0.2_linux-x64_bin.tar.gz dest=/tmp/openjdk-11.0.2_linux-x64_bin.tar.gz mode=get
       aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}}
   when: not java11_installed.stat.exists
 - name: Install JDK 11
-  unarchive: src=/tmp/openjdk-11-ea+23_linux-x64_bin.tar.gz dest=/usr/lib/jvm copy=no
+  unarchive: src=/tmp/openjdk-11.0.2_linux-x64_bin.tar.gz dest=/usr/lib/jvm copy=no
   when: not java11_installed.stat.exists
 - name: Create JDK 11 symlink
   file: src=/usr/lib/jvm/jdk-11 path=/usr/lib/jvm/java-11 state=link force=yes
   when: not java11_installed.stat.exists
-- file: path=/tmp/openjdk-11-ea+23_linux-x64_bin.tar.gz state=absent
+- file: path=/tmp/openjdk-11.0.2_linux-x64_bin.tar.gz state=absent
 
