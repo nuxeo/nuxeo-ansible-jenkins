@@ -11,7 +11,7 @@
   unarchive: src=/tmp/openjdk-11.0.2_linux-x64_bin.tar.gz dest=/usr/lib/jvm copy=no
   when: not java11_installed.stat.exists
 - name: Create JDK 11 symlink
-  file: src=/usr/lib/jvm/jdk-11 path=/usr/lib/jvm/java-11 state=link force=yes
+  file: src=/usr/lib/jvm/jdk-11.0.2 path=/usr/lib/jvm/java-11 state=link force=yes
   when: not java11_installed.stat.exists
 - file: path=/tmp/openjdk-11.0.2_linux-x64_bin.tar.gz state=absent
 
