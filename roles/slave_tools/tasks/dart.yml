@@ -1,15 +1,27 @@
----
-- name: Get the Google Linux package signing key
-  apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
-- name: Set up the location of the stable repository
-  get_url: url=https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list dest=/etc/apt/sources.list.d/dart_stable.list
-- name: Update apt cache
-  apt: update_cache=yes
-- name: Install Dart
-  apt: name=dart=1.21.1-1 state=present
-- name: Update alternatives
-  alternatives: name={{item}} link=/usr/bin/{{item}} path=/usr/lib/dart/bin/{{item}}
-  with_items:
-  - dart
-  - pub
-  - dart2js
+- name: Check for dart 1.21.1
+  stat: path=/opt/build/tools/dartsdk-linux-1.21.1-x64-release.zip
+  register: dart_installed
+- name: Get dart 1.21.1 package
+  s3: bucket={{s3_bucket}} region={{s3_region}}
+      object=/{{s3_tools_path}}/dartsdk-linux-1.21.1-x64-release.zip  dest=/tmp/dartsdk-linux-1.21.1-x64-release.zip mode=get
+      aws_access_key={{aws_id.msg}} aws_secret_key={{aws_secret.msg}}
+  when: not dart_installed.stat.exists
+- name: Install dart 1.21.1
+  unarchive: src=/tmp/dartsdk-linux-1.21.1-x64-release.zip dest=/opt/build/tools copy=no
+  when: not dart_installed.stat.exists
+- file: src=/opt/build/tools/dart-sdk/bin/dart path=/opt/build/tools/dart state=link
+- file: path=/tmp/dartsdk-linux-1.21.1-x64-release.zip state=absent
+
+- name: Dart symbolic link 
+  file:
+    src: "/opt/build/tools/dart-sdk/bin/dart"
+    dest: "/usr/bin/dart"
+    state: link
+- file: 
+    src: "/opt/build/tools/dart-sdk/bin/dart2js"
+    dest: "/usr/bin/dart2js"
+    state: link
+- file: 
+    src: "/opt/build/tools/dart-sdk/bin/pub"
+    dest: "/usr/bin/pub"
+    state: link
