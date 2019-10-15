@@ -17,8 +17,8 @@
   with_items:
     - libnss3
     - libgconf-2-4
-- name: Install ChromeDriver 2.36
-  get_url: url=http://chromedriver.storage.googleapis.com/2.36/chromedriver_linux64.zip
+- name: Install ChromeDriver 74
+  get_url: url=https://chromedriver.storage.googleapis.com/74.0.3729.6/chromedriver_linux64.zip
            dest=/tmp/chromedriver_linux64.zip
 - command: creates=/usr/bin/chromedriver chdir=/usr/bin
            unzip /tmp/chromedriver_linux64.zip
