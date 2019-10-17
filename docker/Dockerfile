@@ -10,7 +10,7 @@ RUN echo "deb http://ubuntu.mirrors.ovh.net/ftp.ubuntu.com/ubuntu/ xenial-update
 RUN echo "deb http://security.ubuntu.com/ubuntu xenial-security main restricted universe multiverse" >> /etc/apt/sources.list
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update || true
-RUN apt-get -q -y dist-upgrade
+RUN apt-get -q -y -o Dpkg::Options::="--force-confold" dist-upgrade
 RUN apt-get -q -y install locales unzip sudo
 RUN locale-gen en_US.UTF-8
 RUN dpkg-reconfigure locales
