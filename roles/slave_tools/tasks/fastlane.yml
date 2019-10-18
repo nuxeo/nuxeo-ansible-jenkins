@@ -1,8 +1,17 @@
 ---
 # file: roles/slave_tools/tasks/fastlane.yml
-
-- name: Install the latest version of fastlane
+- name: Add ruby ppa
+  apt_repository: repo='ppa:brightbox/ruby-ng'
+- name: Update apt cache
+  apt: update_cache=yes
+- name: Install golang ruby2.4
+  apt: name={{item}} state=installed
+  with_items:
+    - ruby2.4
+    - ruby2.4-dev
+- name: Install fastlane 2.114.0
   gem:
     name: fastlane
-    state: latest
+    state: present
+    version: 2.114.0
     user_install: no
