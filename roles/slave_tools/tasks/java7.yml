@@ -19,4 +19,5 @@
 - file: path=/tmp/jdk-7-linux-x64.tgz state=absent
 - name: Add fake openjdk 7 symlink
   file: src=/usr/lib/jvm/java-7 path=/usr/lib/jvm/java-7-openjdk state=link
-
+- name: Import mavenpriv certificates for java7
+  shell: keytool -printcert -rfc -sslserver mavenpriv.nuxeo.com | keytool -importcert -keystore /usr/lib/jvm/java-7-openjdk/jre/lib/security/cacerts -file -
