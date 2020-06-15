@@ -1,7 +1,7 @@
 ---
 - name: Install Docker's dependencies
   apt:
-    name: "apt-transport-https ca-certificates curl gnupg-agent software-properties-common"
+    name: "{{ docker__package_dependencies }}"
 
 - name: Add Docker's public GPG key to the APT keyring
   apt_key:

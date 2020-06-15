@@ -2,4 +2,10 @@
 s3_region: eu-west-1
 s3_bucket: nuxeo-devtools-resources
 s3_tools_path: packages/linux
+docker__package_dependencies:
+  - "apt-transport-https"
+  - "ca-certificates"
+  - "curl"
+  - "gnupg-agent"
+  - "software-properties-common"
 
