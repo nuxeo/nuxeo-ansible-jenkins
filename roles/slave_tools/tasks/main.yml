@@ -342,6 +342,10 @@
   file: path=/etc/service/namettl/down state=touch
   when: myinitd.stat.exists
 
+# Update TLS certificates
+- name: Update TLS certificates
+  command: apt-get install --reinstall ca-certificates -y
+
 - include: postgresql.yml
 
 - include: git-lfs.yml
