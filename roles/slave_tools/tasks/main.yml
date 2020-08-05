@@ -118,7 +118,6 @@
   - python3-venv
   # Nuxeo Drive stuff
   - xclip
-  - appstream
   tags: apt
 - name: Fix ImageMagick policy
   replace: dest=/etc/ImageMagick-6/policy.xml regexp='rights="none" pattern="(PS|EPS|PDF|XPS)"' replace='rights="read|write" pattern="\1"'
