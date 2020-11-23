@@ -5,10 +5,14 @@
   copy: src=mongodb-org-4.0.list dest=/etc/apt/sources.list.d/mongodb-org-4.0.list
 - name: Update apt cache
   apt: update_cache=yes
+- name: Create systemctl mock symlink
+  file: src=/bin/true path=/usr/local/bin/systemctl state=link
 - name: Install MongoDB client
   apt: name={{item}} state=present
   with_items:
   - mongodb-org
+- name: Remove systemctl mock symlink
+  file: path=/usr/local/bin/systemctl state=absent
 - name: Create MongoDB runit dir
   file: path=/etc/service/mongodb state=directory
 - name: Add MongoDB startup script
