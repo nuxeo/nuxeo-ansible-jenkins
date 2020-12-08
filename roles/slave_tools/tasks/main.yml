@@ -219,6 +219,10 @@
 # Android
 - include: android.yml
 
+# Rake
+- include: rake.yml
+  tags: rake
+
 # Fastlane
 - include: fastlane.yml
   tags: fastlane

@@ -1,0 +1,11 @@
+---
+# file: roles/slave_tools/tasks/rake.yml
+
+- name: Install the latest version of rake
+  become: true
+  become_user: jenkins
+  gem:
+    name: rake
+    state: latest
+    user_install: yes
+
