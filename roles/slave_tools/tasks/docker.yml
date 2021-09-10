@@ -1,10 +1,16 @@
 ---
-- name: Add docker apt key
-  apt_key: keyserver=hkp://p80.pool.sks-keyservers.net:80 id=9DC858229FC7DD38854AE2D88D81803C0EBFCD88
-- name: Add docker repo
-  copy: src=docker.list dest=/etc/apt/sources.list.d/docker.list
-- name: Update apt cache
-  apt: update_cache=yes
-- name: Install docker
-  apt: name=docker-ce state=present
-
+- name: Install aptitude using apt
+  apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
+- name: Install required system packages
+  apt: name={{ item }} state=latest update_cache=yes
+  loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'gnupg']
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    state: present
+- name: Update apt and install docker-ce
+  apt: update_cache=yes name=docker-ce state=latest
